@@ -1,3 +1,6 @@
-show user;
+USER이(가) "SCOTT"입니다.
 
-select sysdate from dual;
+SYSDATE             
+--------------------
+2021/05/25  16:57:48
+
