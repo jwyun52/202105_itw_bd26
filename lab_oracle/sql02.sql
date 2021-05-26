@@ -33,3 +33,23 @@ select empno, ename, sal, hiredate from emp;
 -- 테이블에서 모든 컬럼(모든 자료)를 검색
 select * from emp;
 
+-- select할 때 컬럼 이름의 별명(alias)을 작성
+-- select 컬럼이름 as 별명, ... from 테이블이름;
+select empno as 사번, ename as 이름 
+from emp;
+
+-- 사원 테이블에서 사번, 이름, 급여, 연봉(sal * 12)을 검색
+select empno, ename, sal, sal * 12 as annual_sal
+from emp;
+
+-- 사원 테이블에서 직책 검색
+select job from emp;
+
+-- 컬럼에서 중복되지 않는 값들만 검색
+select distinct job from emp;
+
+-- distinct는 select 문에서 한번만, 모든 컬럼들의 이름 앞에 사용!
+select distinct job, deptno
+from emp;
+
+-- select job, distinct deptno fro emp;  -- 오류(error) 발생 문장
