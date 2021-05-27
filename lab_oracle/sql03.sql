@@ -81,6 +81,64 @@ where job != 'CLERK';
 -- 사원 테이블에서
 -- 1) 20번 부서에서 근무하거나 또는 SALESMAN 직책을 담당하는 사원의
 -- 부서번호, 사번, 이름, 직책을 검색
--- 2) CLERK, ANALYST, MANAGER들의 사번, 이름, 직책, 급여를 검색
--- 3) CLERK, ANALYST, MANAGER가 아닌 사원들의 사번, 이름, 직책, 급여를 검색
+select deptno, empno, ename, job
+from emp
+where deptno = 20 or job = 'SALESMAN';
 
+-- 2) CLERK, ANALYST, MANAGER들의 사번, 이름, 직책, 급여를 검색
+select empno, ename, job, sal
+from emp
+where (job = 'CLERK') or (job = 'ANALYST') or (job = 'MANAGER');
+
+select empno, ename, job, sal
+from emp
+where job in ('CLERK', 'ANALYST', 'MANAGER');
+
+-- 3) CLERK, ANALYST, MANAGER가 아닌 사원들의 사번, 이름, 직책, 급여를 검색
+select empno, ename, job, sal
+from emp
+where not ((job = 'CLERK') or (job = 'ANALYST') or (job = 'MANAGER'));
+
+select empno, ename, job, sal
+from emp
+where (job != 'CLERK') and (job != 'ANALYST') and (job != 'MANAGER');
+
+select empno, ename, job, sal
+from emp
+where job not in ('CLERK', 'ANALYST', 'MANAGER');
+
+select empno, ename, job, sal
+from emp
+where not job in ('CLERK', 'ANALYST', 'MANAGER');
+
+-- 문자열도 크기(대소)비교가 가능: 알파벳(사전) 순서
+-- A < B < C < ... < a < b < ...
+-- ㄱ < ㄴ < ㄷ < ...
+select ename from emp
+where ename >= 'D';
+
+-- 날짜도 크기(대소) 비교가 가능: 연도 -> 월 -> 일 -> 시 -> 분 -> 초 순서로 비교
+select * from emp;
+-- 1987년 1월 1일 (포함) 이후에 입사한 사원들의 레코드
+select * from emp
+where hiredate >= '1987/01/01';
+
+-- 특정 문자(열)로 시작하는 단어 검색
+select ename from emp
+where ename like 'A%';
+
+select ename from emp
+where ename like 'A_';
+
+select * from emp
+where job like '_LERK';
+
+select * from emp
+where job like '_ERK';
+
+select * from emp
+where job like '%ERK';
+
+-- 사원 이름 중에 'E'가 포함된 사원들의 레코드 검색
+select * from emp
+where ename like '%E%';
