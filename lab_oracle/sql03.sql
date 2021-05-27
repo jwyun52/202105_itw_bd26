@@ -142,3 +142,40 @@ where job like '%ERK';
 -- 사원 이름 중에 'E'가 포함된 사원들의 레코드 검색
 select * from emp
 where ename like '%E%';
+
+select * from emp
+where hiredate >= to_date('87.01.01', 'RR.MM.DD');
+
+-- 집합 연산자: 합집합(union), 교집합(intersect), 차집합(minus)
+select * from emp where deptno = 20;  -- (1) 결과: 5개 row
+select * from emp where sal >= 3000;  -- (2) 결과: 3개 row
+-- (1)과 (2)를 동시에 만족하는 결과(교집합): 결과 2개 row
+select * from emp
+where deptno = 20 and sal >= 3000;
+
+select * from emp where deptno = 20
+intersect
+select * from emp where sal >= 3000;
+
+select * from emp where deptno = 10;  -- 결과 3개 row
+select * from emp where deptno = 20;  -- 결과 5개 row
+select * from emp 
+where deptno = 10 or deptno = 20;  -- 결과 8개 row
+
+select * from emp where deptno = 10
+union
+select * from emp where deptno = 20;
+
+-- is null, is not null 연산자
+select * from emp where comm = null;  -- 0개 row
+select * from emp where comm is null;  -- 10개 row
+select * from emp where comm is not null;  -- 4개 row
+
+-- 1) 30번 부서에서 일하는, 직책이 SALESMAN인 직원들의
+-- 사번, 이름, 급여, 부서번호를 검색
+
+-- 2) 20, 30번 부서에서 일하는 직원들 중에서 급여가 2000을 초과하는
+-- 직원들의 사번, 부서번호, 이름, 급여를 검색
+
+-- 3) 수당이 없는 직원들 중에서, 매니저가 있고, 직책이 MANAGER 또는 CLERK인
+-- 직원들의 모든 정보를 검색
