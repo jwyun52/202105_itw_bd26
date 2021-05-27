@@ -172,10 +172,43 @@ select * from emp where comm is null;  -- 10개 row
 select * from emp where comm is not null;  -- 4개 row
 
 -- 1) 30번 부서에서 일하는, 직책이 SALESMAN인 직원들의
--- 사번, 이름, 급여, 부서번호를 검색
+-- 사번, 이름, 급여, 부서번호, 직책를 검색
+select empno, ename, sal, deptno, job
+from emp
+where deptno = 30 and job = 'SALESMAN';
 
 -- 2) 20, 30번 부서에서 일하는 직원들 중에서 급여가 2000을 초과하는
 -- 직원들의 사번, 부서번호, 이름, 급여를 검색
+select empno, deptno, ename, sal
+from emp
+where deptno in (20, 30) and sal > 2000;
+
+select empno, deptno, ename, sal
+from emp
+where (deptno = 20 or deptno = 30) and sal > 2000;
 
 -- 3) 수당이 없는 직원들 중에서, 매니저가 있고, 직책이 MANAGER 또는 CLERK인
 -- 직원들의 모든 정보를 검색
+select * from emp
+where comm is null 
+    and mgr is not null 
+    and job in ('MANAGER', 'CLERK');
+
+select * from emp
+where comm is null 
+    and mgr is not null 
+    and (job = 'MANAGER' or job = 'CLERK');
+
+select * from emp where comm is null 
+intersect
+select * from emp where mgr is not null 
+minus
+(select * from emp where job != 'MANAGER'  
+intersect
+select * from emp where job != 'CLERK');  
+
+select * from emp where comm is null 
+intersect
+select * from emp where mgr is not null 
+intersect
+select * from emp where job in ('CLERK', 'MANAGER');
