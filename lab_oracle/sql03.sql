@@ -212,3 +212,11 @@ intersect
 select * from emp where mgr is not null 
 intersect
 select * from emp where job in ('CLERK', 'MANAGER');
+
+select * from emp where comm is null 
+intersect
+select * from emp where mgr is not null 
+intersect
+(select * from emp where job = 'MANAGER'  
+union
+select * from emp where job = 'CLERK');
