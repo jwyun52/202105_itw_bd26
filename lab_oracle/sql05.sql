@@ -111,3 +111,22 @@ from emp;
 
 select hiredate, round(hiredate, 'MM'), trunc(hiredate, 'MM')
 from emp;
+
+-- 타입 변환 함수: to_char, to_number, to_date
+select to_number('15,000', '999,999') from dual;
+select to_number('15,000,000', '00,000,000') as "number" from dual;
+select to_number('1,000.15', '999,999.999' ) from dual;
+select to_number('1,000.15', '0,000.000' ) from dual;
+
+-- 날짜 -> 문자열
+select sysdate,
+    to_char(sysdate, 'YYYY-MM-DD'),
+    to_char(sysdate, 'MM/DD/YYYY'),
+    to_char(sysdate, 'DD/MM/YYYY'),
+    to_char(sysdate, 'DAY')
+from dual;
+
+-- 문자열 -> 날짜
+select to_date('2021-05-28', 'YYYY-MM-DD'),
+    to_date('05-28-21', 'MM-DD-YY')
+from dual;
