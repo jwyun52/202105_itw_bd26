@@ -71,6 +71,11 @@ empno mask_no ename mask_name
 -----------------------------
  7369    73** SMITH S****
 */
+select empno, 
+    rpad(substr(empno, 1, 2), 4, '*') as mask_no,
+    ename,
+    rpad(substr(ename, 1, 1), length(ename), '*') as mask_name
+from emp;
 
 /*
 사원들의 월 평균 근무일수는 21.5일이고, 하루 근무 시간을 8시간이라고 할 때,
@@ -81,3 +86,28 @@ empno ename sal day_pay time_pay
 --------------------------------
  7369 SMITH 800   37.20      4.7
 */
+select empno, ename, sal,
+    trunc(sal / 21.5, 2) as day_pay,
+    round(sal / (21.5 * 8), 1) as time_pay
+from emp;
+
+
+-- 날짜 관련 함수
+select sysdate from dual;
+select add_months(sysdate, 1) from dual;
+
+-- emp 테이블에서 사번, 이름, 입사일, 입사 후 3달이 되는 시점을 출력
+select empno, ename, hiredate, 
+    add_months(hiredate, 3) as hire_3
+from emp;
+
+select hiredate, months_between(hiredate, sysdate) from emp;
+select hiredate, 
+    trunc(months_between(sysdate, hiredate))
+from emp;
+
+select hiredate, round(hiredate, 'YYYY'), trunc(hiredate, 'YYYY')
+from emp;
+
+select hiredate, round(hiredate, 'MM'), trunc(hiredate, 'MM')
+from emp;
