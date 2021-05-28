@@ -35,3 +35,29 @@ select substr('안녕하세요', 1, 2) from dual;
 -- lengthb(문자열): 문자열이 차지하는 byte 수를 반환.
 select length('hello'), lengthb('hello') from dual;
 select length('안녕하세요'), lengthb('안녕하세요') from dual;
+
+-- lpad(문자열, 자릿수, 패딩문자)
+-- rpad(문자열, 자릿수, 패딩문자)
+select lpad('hello', 10, '*'), rpad('hello', 10, '*') from dual;
+
+-- emp 테이블에서 사번, 이름을 검색 출력
+-- 이름은 첫 두 글자만 출력하고, '*' 3개를 패딩으로 채워서 출력
+select empno, rpad(substr(ename, 1, 2), 5, '*') as name
+from emp;
+
+-- replace(문자열, before, after):
+-- 문자열에 포함된 before 문자(열)을 after 문자(열)로 변환
+select replace('jack and jue', 'j', 'bl') from dual;
+
+-- 문자열에 포함된 공백들을 제거하는 용도로 replace를 사용
+select replace('Hello World SQL     Dev', ' ', '') from dual;
+
+
+-- 숫자 관련 함수
+-- round(숫자, 소수점 자릿수): 반올림
+-- trunc(숫자, 소수점 자릿수): 버림(truncate)
+select round(1234.5678, 0), round(1234.5678, 1), round(1234.5678, -1)
+from dual;
+
+select trunc(1234.5678, 0), trunc(1234.5678, 1), trunc(1234.5678, -1)
+from dual;
