@@ -130,3 +130,42 @@ from dual;
 select to_date('2021-05-28', 'YYYY-MM-DD'),
     to_date('05-28-21', 'MM-DD-YY')
 from dual;
+
+-- emp 테이블에서 1987년 1월 1일 (포함) 이후에 입사한 사원들의 레코드 출력
+select * from emp
+where hiredate >= to_date('1987-01-01', 'YYYY-MM-DD');
+
+
+-- null 값 대체 함수:
+-- nvl(컬럼, null 대체 값)
+-- nvl2(컬럼, null이 아닐 때 대체할 값, null일 때 대체할 값)
+select comm, nvl(comm, 0), nvl2(comm, 'TRUE', 'FALSE')
+from emp;
+
+-- nvl2함수를 사용해서 nvl 함수와 같은 결과를 만들려면?
+select comm, nvl2(comm, comm, 0)
+from emp;
+
+-- emp 테이블에서 사번, 이름, 급여, 수당, 연봉(comm 포함)을 출력
+select empno, ename, sal, comm, 
+    sal * 12 + nvl(comm, 0) as annual_sal
+from emp;
+
+select empno, ename, sal, comm,
+    nvl2(sal * 12 + comm, sal * 12 + comm, sal * 12) as annual_sal
+from emp;
+
+-- emp 테이블에서 연봉(comm 포함)이 30,000 이상인 사원들의 사번, 이름, 급여, 수당, 연봉
+select empno, ename, sal, comm, 
+    sal * 12 + nvl(comm, 0) as annual_sal
+from emp
+where sal * 12 + nvl(comm, 0) >= 30000;
+
+-- comm이 null인 경우 null이 아닌 comm의 평균값으로 대체
+select avg(comm) from emp;  -- avg 함수는 null 값들을 제외하고 평균을 계산해줌.
+select nvl2(comm, comm, 550) from emp;
+select nvl2(comm, comm, avg(comm)) from emp;  -- 에러 발생 문장
+-- 단일행 함수와 그룹함수(다중행 함수)는 함께 사용할 수 없음.
+select nvl2(comm, comm, 
+            (select avg(comm) from emp))
+from emp;
