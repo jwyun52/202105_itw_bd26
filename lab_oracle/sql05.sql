@@ -16,5 +16,22 @@ select initcap('SQL DEVeloper') from dual;
 select lower(ename) from emp;
 
 -- emp 테이블에서 Scott의 레코드를 검색
-select * from emp where lower(ename) = 'Scott';
+select * from emp where lower(ename) = 'scott';
 select * from employees where lower(emp_name) like '%michael%';
+select * from employees where lower(job_id) like 'sa%';
+
+-- substr(문자열, 시작인덱스, 문자갯수):
+-- 문자열에서 시작인덱스에서부터 문자갯수만큼 잘라낸 문자열을 반환
+select substr('Hello World', 1, 5) from dual;
+select substr('Hello World', 3, 6) from dual;
+
+-- substr() 함수를 사용할 때 잘라낼 문자갯수를 전달하지 않으면, 
+-- 시작인덱스부터 문자열의 끝까지를 잘라냄
+select substr('https://www.google.com/', 9) from dual;
+
+select substr('안녕하세요', 1, 2) from dual;
+
+-- length(문자열): 문자열의 문자 갯수를 반환.
+-- lengthb(문자열): 문자열이 차지하는 byte 수를 반환.
+select length('hello'), lengthb('hello') from dual;
+select length('안녕하세요'), lengthb('안녕하세요') from dual;
