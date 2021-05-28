@@ -66,3 +66,17 @@ select * from departments where department_id = 20;
 
 -- 7. 6에서 찾은 정보를 사용해서, 20번 부서의 관리자 정보를 다른 테이블에서 검색, 출력
 select * from employees where employee_id = 201;
+
+
+-- emp 테이블을 sal의 오름차순(ascending order)로 정렬해서 출력 
+select * from emp order by sal asc;
+select * from emp order by sal;  -- 오름차순 정렬이 기본이므로 asc는 생략 가능.
+
+-- emp 테이블을 sal의 내림차순(descending order)로 정렬해서 출력
+select * from emp order by sal desc;
+
+-- emp 테이블을 deptno -> sal의 오름차순 정렬 출력
+select * from emp order by deptno, sal;
+
+-- emp 테이블을 (1) deptno 오름차순, (2) sal 내림차순 정렬 출력
+select * from emp order by deptno asc, sal desc;
