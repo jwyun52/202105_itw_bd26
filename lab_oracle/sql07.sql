@@ -60,13 +60,63 @@ order by YEAR;
 -- 1. 부서별 사원수, 급여의 최댓값, 최솟값, 합계, 평균, 중앙값, 분산, 표준편차 검색
 -- 소숫점은 1자리까지만 출력.
 -- 부서번호 오름차순 출력.
+select department_id,
+    count(*) as counts,
+    max(salary) as max_sal,
+    min(salary) as min_sal,
+    sum(salary) as sum_sal,
+    round(avg(salary), 1) as avg_sal,
+    median(salary) as median_sal,
+    round(variance(salary), 1) as var_sal,
+    round(stddev(salary), 1) as std_sal
+from employees
+group by department_id
+order by department_id;
 
 -- 2. 직책별 사원수, 급여의 최댓값, 최솟값, 합계, 평균, 중앙값, 분산, 표준편차 검색
 -- 소숫점은 1자리까지만 출력.
 -- 직책 이름의 오름차순 출력.
+select job_id,
+    count(*) as counts,
+    max(salary) as max_sal,
+    min(salary) as min_sal,
+    sum(salary) as sum_sal,
+    round(avg(salary), 1) as avg_sal,
+    median(salary) as median_sal,
+    round(variance(salary), 1) as var_sal,
+    round(stddev(salary), 1) as std_sal
+from employees
+group by job_id
+order by job_id;
 
 -- 3. 부서별 직책별 사원수 급여의 평균 검색
 -- 부서번호 오름차순 -> 직책 이름 오름차순 정렬 출력.
+select department_id, job_id, 
+    count(*) as counts, 
+    round(avg(salary), 1) as avg_sal
+from employees
+group by department_id, job_id
+order by department_id, job_id;
 
 -- 4. 수당을 받는 직원들의 직책별 사원수, 연봉의 평균을 직책 오름차순으로 출력
 -- 연봉 = salary * 12 * (1 + commission_pct)
+select job_id, 
+    count(*) as counts, 
+    avg(salary * 12 * (1 + commission_pct)) as avg_annual_sal
+from employees
+where commission_pct is not null
+group by job_id;
+
+-- 5. 부서번호가 90번이 아니고, 부서번호가 null이 아닌 사원들 중에서
+-- 부서별 인원수가 10명 이상인 부서의
+-- 부서별 인원수, 급여 최솟값, 최댓값을
+-- 부서번호 오름차순으로 출력
+select department_id, 
+    count(*) as counts, 
+    min(salary) as min_sal, 
+    max(salary) as max_sal
+from employees
+where department_id != 90 and department_id is not null
+group by department_id
+having count(*) >= 10
+order by department_id;
