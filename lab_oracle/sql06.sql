@@ -17,3 +17,46 @@ select sal, sum(sal) from emp;  -- 에러 발생 문장
 select nvl(comm, -1) from emp;  -- 14개 rows
 select max(comm) from emp;  -- 1개 row
 select nvl(comm, -1), max(comm) from emp;  -- 에러 발생 문장
+
+-- 그룹 함수들은 기본적으로 null을 제외하고 기능을 수행함!
+select comm from emp;  -- 4개 not null, 10개 null
+select sum(comm), avg(comm) from emp;  -- 평균을 계산할 때 4로 나눔!
+
+-- count(컬럼): 컬럼에서 null이 아닌 자료의 숫자를 반환.
+select count(sal) from emp;
+select count(comm) from emp;
+
+select count(*) from emp;  -- 테이블의 전체 row의 갯수
+select count(distinct deptno) from emp;  -- 구분되는(중복되지 않는) 자료의 갯수
+
+-- 10번 부서에 근무하는 사원들의 급여 평균, 최솟값, 최댓값, 표준편차를 출력.
+-- 소숫점은 2자리까지 출력
+select deptno, sal from emp where deptno = 10;
+
+select 10 as DEPTNO, 
+    round(avg(sal), 2) as MEAN, 
+    min(sal) as MIN, 
+    max(sal) as MAX, 
+    round(stddev(sal), 2) as STD_DEV
+from emp
+where deptno = 10;
+
+-- 20번 부서에 근무하는 사원들의 급여 평균, 최솟값, 최댓값, 표준편차를 출력.
+-- 소숫점은 2자리까지 출력
+select 20 as DEPTNO, 
+    round(avg(sal), 2) as MEAN, 
+    min(sal) as MIN, 
+    max(sal) as MAX, 
+    round(stddev(sal), 2) as STD_DEV
+from emp
+where deptno = 20;
+
+-- 30번 부서에 근무하는 사원들의 급여 평균, 최솟값, 최댓값, 표준편차를 출력.
+-- 소숫점은 2자리까지 출력
+select 30 as DEPTNO, 
+    round(avg(sal), 2) as MEAN, 
+    min(sal) as MIN, 
+    max(sal) as MAX, 
+    round(stddev(sal), 2) as STD_DEV
+from emp
+where deptno = 30;
