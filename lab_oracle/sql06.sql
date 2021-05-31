@@ -81,3 +81,27 @@ select job, round(avg(sal), 2) as AVG_SAL,
 from emp
 group by job;
 
+-- 부서별, 직책별 부서번호, 직책, 사원수, 급여 평균을 검색
+-- 출력할 때 정렬 기준: (1) 부서번호 -> (2) 직책
+-- 소숫점이 있는 경우 소숫점 2자리까지 출력
+select deptno, job, count(*) as COUNT, 
+    round(avg(sal), 2) as AVG_SAL
+from emp
+group by deptno, job
+order by deptno, job;
+
+-- 입사연도별 입사연도, 사원수 출력
+select hiredate from emp;
+select to_char(hiredate, 'YYYY') from emp;
+select trunc(hiredate, 'YYYY') from emp;
+select substr(hiredate, 1, 4) from emp;
+
+select to_char(hiredate, 'YYYY') as YEAR,
+    count(*) as COUNT
+from emp
+group by to_char(hiredate, 'YYYY')
+order by YEAR;
+-- select 절에서 지정한 별명(alias)은 
+-- where, group by, having 절에서는 사용할 수 없지만,
+-- order by에서는 사용할 수 있음!
+
