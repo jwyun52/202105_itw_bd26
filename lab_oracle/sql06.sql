@@ -60,3 +60,24 @@ select 30 as DEPTNO,
     round(stddev(sal), 2) as STD_DEV
 from emp
 where deptno = 30;
+
+-- 부서별 급여의 평균
+select 10 as deptno, avg(sal) as mean from emp where deptno = 10
+union
+select 20 as deptno, avg(sal) as mean from emp where deptno = 20
+union
+select 30 as deptno, avg(sal) as mean from emp where deptno = 30;
+
+select deptno, avg(sal)
+from emp
+group by deptno
+order by deptno;
+
+-- 직책(job)별 급여 평균, 최솟값, 최댓값, 직원수 출력. 
+-- 소숫점은 2자리까지만 출력.
+select job, round(avg(sal), 2) as AVG_SAL, 
+    min(sal) as MIN_SAL, max(sal) as MAX_SAL,
+    count(*) as COUNT
+from emp
+group by job;
+
