@@ -36,10 +36,37 @@ having mgr is not null;  -- 에러 발생
 -- 직책이 PRESIDENT는 제외
 -- 직책별 사원수가 3명 이상인 레코드만 선택
 -- 직책 이름 오름차순으로 정렬
-
+select job, count(*)
+from emp
+where job != 'PRESIDENT'
+group by job
+having count(*) >= 3
+order by job;
 
 -- 입사연도, 부서번호, 입사연도별 부서별 입사한 사원수 출력
 -- 1980년은 제외
--- 연도별 사원수가 2명 이상인 경우만 선택
+-- 연도별 부서별 사원수가 2명 이상인 경우만 선택
 -- 연도 오름차순으로 정렬
+select to_char(hiredate, 'YYYY') as YEAR,
+    deptno, count(*) as COUNT
+from emp
+where to_char(hiredate, 'YYYY') != '1980'
+group by to_char(hiredate, 'YYYY'), deptno
+having count(*) >= 2
+order by YEAR;
 
+
+-- employees 테이블에서
+-- 1. 부서별 사원수, 급여의 최댓값, 최솟값, 합계, 평균, 중앙값, 분산, 표준편차 검색
+-- 소숫점은 1자리까지만 출력.
+-- 부서번호 오름차순 출력.
+
+-- 2. 직책별 사원수, 급여의 최댓값, 최솟값, 합계, 평균, 중앙값, 분산, 표준편차 검색
+-- 소숫점은 1자리까지만 출력.
+-- 직책 이름의 오름차순 출력.
+
+-- 3. 부서별 직책별 사원수 급여의 평균 검색
+-- 부서번호 오름차순 -> 직책 이름 오름차순 정렬 출력.
+
+-- 4. 수당을 받는 직원들의 직책별 사원수, 연봉의 평균을 직책 오름차순으로 출력
+-- 연봉 = salary * 12 * (1 + commission_pct)
