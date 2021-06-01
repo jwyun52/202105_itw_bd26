@@ -88,17 +88,58 @@ order by deptno;
 
 -- 1. 20번 부서에서 근무하는 직원들 중에서
 -- 30번 부서에 없는 직책을 가진 직원들의 레코드를 출력
+select * from emp
+where deptno = 20 and 
+    job not in (
+        select distinct job from emp where deptno = 30
+    );
+
+select distinct job from emp where deptno = 30;
+
+select * from emp where deptno = 20
+minus
+select * from emp where job in (select job from emp where deptno = 30);
+
+select * from emp
+where job in (
+    select job from emp where deptno = 20
+    minus
+    select job from emp where deptno = 30);
+
 
 -- 2. 급여 최댓값인 직원의 이름과 급여를 출력
+select ename, sal from emp
+where sal = (
+    select max(sal) from emp
+);
+
 
 -- 3. JONES보다 급여를 더 많이 받는 직원들의 이름과 급여를 출력
+select ename, sal from emp
+where sal > (
+    select sal from emp where ename = 'JONES'
+);
+
 
 -- 4. SCOTT과 같은 급여를 받는 직원들의 이름과 급여를 출력
+select ename, sal from emp
+where sal = (
+    select sal from emp where ename = 'SCOTT'
+);
+
 
 -- 5. 4번 결과에서 SCOTT은 제외하고 출력
+select ename, sal from emp
+where sal = (select sal from emp where ename = 'SCOTT')
+    and ename != 'SCOTT';
 
 -- 6. DALLAS에서 근무하는 직원들의 이름과 급여를 출력
 -- EMP 테이블과 DEPT 테이블을 사용
+select ename, sal from emp
+where deptno = (
+    select deptno from dept where loc = 'DALLAS'
+);
+
 
 -- 7. ALLEN보다 늦게 입사한 사원들의 이름과 입사날짜를 최근 입사일부터 출력
 
