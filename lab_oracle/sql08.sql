@@ -205,3 +205,29 @@ where empno not in (
     select empno from emp where empno in 
     (select distinct mgr from emp)
     );
+
+
+-- 다중행 서브 쿼리에서 ALL과 ANY
+-- 10번 부서 직원들의 급여
+select sal from emp where deptno = 10;
+
+select * from emp
+where sal < (select sal from emp where deptno = 10); -- 에러 발생
+
+select * from emp
+where sal < all (select sal from emp where deptno = 10);
+-- where sal < all(2450, 5000, 1300)
+-- where sal < 2450 and sal < 5000 and sal < 1300
+
+select * from emp
+where sal < (select min(sal) from emp where deptno = 10);
+-- all을 사용한 문장과 동일한 결과
+
+select * from emp
+where sal < any (select sal from emp where deptno = 10);
+-- where sal < any(2450, 5000, 1300)
+-- where sal < 2450 or sal < 5000 or sal < 1300
+
+select * from emp
+where sal < (select max(sal) from emp where deptno = 10);
+-- any를 사용한 문장과 동일한 결과
