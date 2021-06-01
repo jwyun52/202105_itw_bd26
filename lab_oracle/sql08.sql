@@ -142,9 +142,66 @@ where deptno = (
 
 
 -- 7. ALLEN보다 늦게 입사한 사원들의 이름과 입사날짜를 최근 입사일부터 출력
+select * from emp where ename = 'ALLEN';  -- ALLEN의 레코드
+
+select ename, hiredate
+from emp
+where hiredate > (
+    select hiredate from emp where ename = 'ALLEN'
+)
+order by hiredate desc;
+
 
 -- 8. 매지저가 KING인 직원들의 사번과 이름을 출력
+select * from emp where ename = 'KING';
+
+select empno, ename, mgr
+from emp
+where mgr = (select empno from emp where ename = 'KING');
 
 -- 9. 관리자인 직원들의 사번, 이름, 부서번호를 출력
+select distinct mgr from emp;
+
+select empno, ename, deptno
+from emp
+where empno in (select distinct mgr from emp);
+
 
 -- 10. 관리자가 아닌 직원들의 사번, 이름, 부서번호를 출력
+select empno, ename, deptno
+from emp
+where empno not in (select distinct mgr from emp); -- 0개 row
+
+select empno, ename, deptno
+from emp
+where empno not in (
+    select distinct mgr from emp
+    where mgr is not null
+    );
+
+select empno, ename, deptno
+from emp
+where empno not in (
+    select distinct nvl(mgr, -1) from emp
+    );
+
+-- col in (1, 2): col = 1 or col = 2
+-- col not in (1, 2): col != 1 and col != 2
+-- col in (1, null): col = 1 or col = null
+select * from emp where comm = null;  -- 0개 행
+select * from emp where comm is null;  -- 10개 행
+-- col not in (1, null): col != 1 and col != null
+select * from emp where comm != null; -- 0개 행
+select * from emp where comm is not null; -- 4개 행
+
+select empno, ename, deptno from emp
+where (empno, ename, deptno) not in (
+    select empno, ename, deptno
+    from emp
+    where empno in (select mgr from emp));
+
+select empno, ename, deptno from emp
+where empno not in (
+    select empno from emp where empno in 
+    (select distinct mgr from emp)
+    );
