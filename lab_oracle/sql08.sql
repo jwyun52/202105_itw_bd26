@@ -79,3 +79,30 @@ where (deptno, sal) in (
 
 -- 각 부서에서 급여가 최댓값인 직원들의 레코드 검색.
 -- 부서번호 오름차순으로 정렬 출력.
+select deptno, max(sal) from emp group by deptno;
+select * from emp
+where (deptno, sal) in (
+    select deptno, max(sal) from emp group by deptno
+)
+order by deptno;
+
+-- 1. 20번 부서에서 근무하는 직원들 중에서
+-- 30번 부서에 없는 직책을 가진 직원들의 레코드를 출력
+
+-- 2. 급여 최댓값인 직원의 이름과 급여를 출력
+
+-- 3. JONES보다 급여를 더 많이 받는 직원들의 이름과 급여를 출력
+
+-- 4. SCOTT과 같은 급여를 받는 직원들의 이름과 급여를 출력
+
+-- 5. 4번 결과에서 SCOTT은 제외하고 출력
+
+-- 6. DALLAS에서 근무하는 사원들의 이름과 급여를 출력
+
+-- 7. ALLEN보다 늦게 입사한 사원들의 이름과 입사날짜를 최근 입사일부터 출력
+
+-- 8. 매지저가 KING인 직원들의 사번과 이름을 출력
+
+-- 9. 관리자인 직원들의 사번, 이름, 부서번호를 출력
+
+-- 10. 관리자가 아닌 직원들의 사번, 이름, 부서번호를 출력
