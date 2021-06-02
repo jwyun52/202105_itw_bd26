@@ -109,10 +109,58 @@ from emp e cross join dept d;
 -- emp, dept 테이블에서 사번, 이름, 부서이름, 급여를 출력. (inner join)
 -- 급여가 2000 이상인 직원들만 선택.
 -- 급여의 내림차순 정렬.
+-- 1) Oracle 문법
+select e.empno, e.ename, d.dname, e.sal
+from emp e, dept d
+where e.deptno = d.deptno 
+    and e.sal >= 2000
+order by e.sal desc;
+
+-- 2) ANSI 문법
+select e.empno, e.ename, d.dname, e.sal
+from emp e join dept d on e.deptno = d.deptno
+where e.sal >= 2000
+order by e.sal desc;
 
 
+-- self join: 하나의 테이블에서 join을 하는 것.
+-- 사번, 이름, 매니저 사번, 매니저 이름 검색
+-- 1) Oracle, inner join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1, emp e2
+where e1.mgr = e2.empno;
 
+-- 2) ANSI, inner join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1 join emp e2
+    on e1.mgr = e2.empno;
 
+-- 3) Oracle, left join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1, emp e2
+where e1.mgr = e2.empno(+);
 
+-- 4) ANSI, left join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1 left join emp e2
+    on e1.mgr = e2.empno;
 
+-- 5) Oracle, right join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1, emp e2
+where e1.mgr(+) = e2.empno;
 
+-- 6) ANSI, right join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1 right join emp e2
+    on e1.mgr = e2.empno;
+
+-- 7) Oracle, full join
+
+-- 8) ANSI, full join
