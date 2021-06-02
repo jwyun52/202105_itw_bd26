@@ -66,19 +66,49 @@ from emp e left outer join dept d
 
 -- right outer join
 -- 1) Oracle 문법
+select e.empno, e.ename, d.deptno, d.dname
+from emp e, dept d
+where e.deptno(+) = d.deptno;
 
 -- 2) ANSI 표준 문법
+select e.empno, e.ename, d.deptno, d.dname
+from emp e right outer join dept d
+    on e.deptno = d.deptno;
 
+-- right outer join에서는
+-- 오른쪽 테이블인 dept에만 있는 40번 Operation이 검색됨.
+-- 왼쪽 테이블인 emp에만 있는 50번 부서는 검색되지 않음.
 
+-- full outer join
+-- Oracle 문법은 없고, ANSI 표준 문법만 있음.
+select e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e full outer join dept d
+    on e.deptno = d.deptno;
 
+select e.empno, e.ename, e.deptno, d.dname
+    from emp e, dept d
+    where e.deptno = d.deptno(+)  -- left outer join
+union  -- 합집합
+select e.empno, e.ename, d.deptno, d.dname
+    from emp e, dept d
+    where e.deptno(+) = d.deptno;  -- right outer join
 
+-- join 이름을 쓸 때 inner와 outer는 생략가능!
+-- inner join = join 
+-- left outer join = left join
+-- right outer join = right join
+-- full outer join = full join
 
+-- cross join(cartesian product) - 거의 사용하는 경우가 없음.
+select e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e, dept d;
 
+select e.empno, e.ename, e.deptno, d.deptno, d.dname
+from emp e cross join dept d;
 
-
-
-
-
+-- emp, dept 테이블에서 사번, 이름, 부서이름, 급여를 출력. (inner join)
+-- 급여가 2000 이상인 직원들만 선택.
+-- 급여의 내림차순 정렬.
 
 
 
