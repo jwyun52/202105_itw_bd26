@@ -161,6 +161,59 @@ select e1.empno as 사번, e1.ename as 이름,
 from emp e1 right join emp e2
     on e1.mgr = e2.empno;
 
--- 7) Oracle, full join
+-- 7) ANSI, full join
+select e1.empno as 사번, e1.ename as 이름, 
+    e1.mgr as "매니저 사번", e2.ename as "매니저 이름"
+from emp e1 full join emp e2
+    on e1.mgr = e2.empno
+order by e1.empno;
 
--- 8) ANSI, full join
+
+-- non-equi join
+-- emp 테이블과 salgrade 테이블에서 사번, 이름, 급여, 급여등급을 검색
+-- 1) Oracle 문법
+select e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal and s.hisal;
+
+-- 2) ANSI 표준 문법
+select e.empno, e.ename, e.sal, s.grade
+from emp e join salgrade s
+    on e.sal between s.losal and s.hisal;
+    
+-- 3) Oracle, left join
+select e.empno, e.ename, e.sal, s.grade
+from emp e, salgrade s
+where e.sal between s.losal(+) and s.hisal(+);
+
+-- 4) ANSI, left join
+select e.empno, e.ename, e.sal, s.grade
+from emp e left join salgrade s
+    on e.sal between s.losal and s.hisal;
+
+
+-- emp, dept, salgrade 테이블에서 사번, 이름, 부서이름, 급여, 급여등급을 검색
+-- 1) Oracle 문법
+select e.empno, e.ename, d.dname, e.sal, s.grade
+from emp e, dept d, salgrade s
+where e.deptno = d.deptno 
+    and e.sal between s.losal and s.hisal;
+
+-- 2) ANSI 문법
+select e.empno, e.ename, d.dname, e.sal, s.grade
+from emp e 
+    join dept d on e.deptno = d.deptno
+    join salgrade s on e.sal between s.losal and s.hisal;
+
+-- 3) Oracle 문법, left join
+select e.empno, e.ename, d.dname, e.sal, s.grade
+from emp e, dept d, salgrade s
+where e.deptno = d.deptno(+) 
+    and e.sal between s.losal(+) and s.hisal(+);
+
+-- 4) ANSI 문법, left join
+select e.empno, e.ename, d.dname, e.sal, s.grade
+from emp e 
+    left join dept d on e.deptno = d.deptno
+    left join salgrade s on e.sal between s.losal and s.hisal;
+    
