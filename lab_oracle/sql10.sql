@@ -101,10 +101,40 @@ where d.deptno = e.deptno
 group by d.loc;
 
 -- 부서 위치, 부서에서 근무하는 사원 수 검색(outer join)
+-- left join
+select d.loc, count(e.empno)
+from dept d left join emp e on d.deptno = e.deptno
+group by d.loc;
 
+select d.loc, count(e.empno)
+from dept d, emp e 
+where d.deptno = e.deptno(+)
+group by d.loc;
+
+-- right join
+select d.loc, count(e.empno)
+from dept d right join emp e 
+    on d.deptno = e.deptno
+group by d.loc;
+
+select d.loc, count(e.empno)
+from dept d, emp e 
+where d.deptno(+) = e.deptno
+group by d.loc;
+
+-- full join
+select d.loc, count(e.empno)
+from dept d full join emp e
+    on d.deptno = e.deptno
+group by d.loc;
 
 -- 5. emp, dept, salgrade 테이블에서
 -- 직원 이름, 부서 위치, 급여, 급여 등급을 검색.
 -- 급여는 3000 이상인 직원들만 선택.
 -- 직원 이름 오름차순 정렬.
-
+select e.ename, d.loc, e.sal, s.grade
+from emp e 
+    join dept d on e.deptno = d.deptno
+    join salgrade s on e.sal between s.losal and s.hisal
+where e.sal >= 3000
+order by e.ename;
