@@ -75,3 +75,30 @@ select * from students2;
 
 -- TCL(Transaction Control Language): COMMIT, ROLLBACK 
 commit;  -- 작업 내용(insert, update, delete 등)을 데이터베이스에 영구적으로 저장.
+
+
+-- 테이블 컬럼의 기본값(default)
+create table citizens (
+    cid     number(2),          -- 숫자 2자리
+    cname   varchar2(5 char),   -- 문자열 5글자까지
+    age     number(3) default 0 -- 숫자 3자리, 기본값은 0
+);
+
+insert into citizens (cid, cname) values (10, '안녕하세요');
+
+select * from citizens;
+
+insert into citizens values (20, '오쌤', null);  
+-- default 값이 있더라도 null이 될 수 있음!
+
+insert into citizens values (30, '오쌤');  -- 에러 발생
+
+
+-- 데이터베이스 서버의 현재시간을 default로 사용하는 컬럼
+create table ex_01 (
+    ex_id   number(2),
+    ex_date date default sysdate
+);
+insert into ex_01 (ex_id) values (1);
+insert into ex_01 (ex_id) values (2);
+select * from ex_01;
