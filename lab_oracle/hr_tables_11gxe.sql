@@ -1,109 +1,125 @@
 --------------------------------------------------------
---  파일이 생성됨 - 목요일-6월-03-2021   
+--  파일이 생성됨 - 금요일-6월-04-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence DEPARTMENTS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "DEPARTMENTS_SEQ"  MINVALUE 1 MAXVALUE 9990 INCREMENT BY 10 START WITH 280 NOCACHE  NOORDER  NOCYCLE
+   CREATE SEQUENCE  "DEPARTMENTS_SEQ"  MINVALUE 1 MAXVALUE 9990 INCREMENT BY 10 START WITH 280 NOCACHE  NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence EMPLOYEES_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "EMPLOYEES_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 207 NOCACHE  NOORDER  NOCYCLE
+   CREATE SEQUENCE  "EMPLOYEES_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 207 NOCACHE  NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence LOCATIONS_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "LOCATIONS_SEQ"  MINVALUE 1 MAXVALUE 9900 INCREMENT BY 100 START WITH 3300 NOCACHE  NOORDER  NOCYCLE
+   CREATE SEQUENCE  "LOCATIONS_SEQ"  MINVALUE 1 MAXVALUE 9900 INCREMENT BY 100 START WITH 3300 NOCACHE  NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Table COUNTRIES
 --------------------------------------------------------
 
   CREATE TABLE "COUNTRIES" 
-   (	"COUNTRY_ID" CHAR(2), 
-	"COUNTRY_NAME" VARCHAR2(40), 
+   (	"COUNTRY_ID" CHAR(2 BYTE), 
+	"COUNTRY_NAME" VARCHAR2(40 BYTE), 
 	"REGION_ID" NUMBER, 
 	 CONSTRAINT "COUNTRY_C_ID_PK" PRIMARY KEY ("COUNTRY_ID") ENABLE
-   ) ORGANIZATION INDEX NOCOMPRESS 
+   ) ORGANIZATION INDEX NOCOMPRESS PCTFREE 10 INITRANS 2 MAXTRANS 255 LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" 
+ PCTTHRESHOLD 50;
 
-   COMMENT ON COLUMN "COUNTRIES"."COUNTRY_ID" IS 'Primary key of countries table.'
-   COMMENT ON COLUMN "COUNTRIES"."COUNTRY_NAME" IS 'Country name'
-   COMMENT ON COLUMN "COUNTRIES"."REGION_ID" IS 'Region ID for the country. Foreign key to region_id column in the departments table.'
-   COMMENT ON TABLE "COUNTRIES"  IS 'country table. Contains 25 rows. References with locations table.'
+   COMMENT ON COLUMN "COUNTRIES"."COUNTRY_ID" IS 'Primary key of countries table.';
+   COMMENT ON COLUMN "COUNTRIES"."COUNTRY_NAME" IS 'Country name';
+   COMMENT ON COLUMN "COUNTRIES"."REGION_ID" IS 'Region ID for the country. Foreign key to region_id column in the departments table.';
+   COMMENT ON TABLE "COUNTRIES"  IS 'country table. Contains 25 rows. References with locations table.';
 --------------------------------------------------------
 --  DDL for Table DEPARTMENTS
 --------------------------------------------------------
 
   CREATE TABLE "DEPARTMENTS" 
    (	"DEPARTMENT_ID" NUMBER(4,0), 
-	"DEPARTMENT_NAME" VARCHAR2(30), 
+	"DEPARTMENT_NAME" VARCHAR2(30 BYTE), 
 	"MANAGER_ID" NUMBER(6,0), 
 	"LOCATION_ID" NUMBER(4,0)
-   ) 
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 
-   COMMENT ON COLUMN "DEPARTMENTS"."DEPARTMENT_ID" IS 'Primary key column of departments table.'
+   COMMENT ON COLUMN "DEPARTMENTS"."DEPARTMENT_ID" IS 'Primary key column of departments table.';
    COMMENT ON COLUMN "DEPARTMENTS"."DEPARTMENT_NAME" IS 'A not null column that shows name of a department. Administration,
 Marketing, Purchasing, Human Resources, Shipping, IT, Executive, Public
-Relations, Sales, Finance, and Accounting. '
-   COMMENT ON COLUMN "DEPARTMENTS"."MANAGER_ID" IS 'Manager_id of a department. Foreign key to employee_id column of employees table. The manager_id column of the employee table references this column.'
-   COMMENT ON COLUMN "DEPARTMENTS"."LOCATION_ID" IS 'Location id where a department is located. Foreign key to location_id column of locations table.'
+Relations, Sales, Finance, and Accounting. ';
+   COMMENT ON COLUMN "DEPARTMENTS"."MANAGER_ID" IS 'Manager_id of a department. Foreign key to employee_id column of employees table. The manager_id column of the employee table references this column.';
+   COMMENT ON COLUMN "DEPARTMENTS"."LOCATION_ID" IS 'Location id where a department is located. Foreign key to location_id column of locations table.';
    COMMENT ON TABLE "DEPARTMENTS"  IS 'Departments table that shows details of departments where employees
-work. Contains 27 rows; references with locations, employees, and job_history tables.'
+work. Contains 27 rows; references with locations, employees, and job_history tables.';
 --------------------------------------------------------
 --  DDL for Table EMPLOYEES
 --------------------------------------------------------
 
   CREATE TABLE "EMPLOYEES" 
    (	"EMPLOYEE_ID" NUMBER(6,0), 
-	"FIRST_NAME" VARCHAR2(20), 
-	"LAST_NAME" VARCHAR2(25), 
-	"EMAIL" VARCHAR2(25), 
-	"PHONE_NUMBER" VARCHAR2(20), 
+	"FIRST_NAME" VARCHAR2(20 BYTE), 
+	"LAST_NAME" VARCHAR2(25 BYTE), 
+	"EMAIL" VARCHAR2(25 BYTE), 
+	"PHONE_NUMBER" VARCHAR2(20 BYTE), 
 	"HIRE_DATE" DATE, 
-	"JOB_ID" VARCHAR2(10), 
+	"JOB_ID" VARCHAR2(10 BYTE), 
 	"SALARY" NUMBER(8,2), 
 	"COMMISSION_PCT" NUMBER(2,2), 
 	"MANAGER_ID" NUMBER(6,0), 
 	"DEPARTMENT_ID" NUMBER(4,0)
-   ) 
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 
-   COMMENT ON COLUMN "EMPLOYEES"."EMPLOYEE_ID" IS 'Primary key of employees table.'
-   COMMENT ON COLUMN "EMPLOYEES"."FIRST_NAME" IS 'First name of the employee. A not null column.'
-   COMMENT ON COLUMN "EMPLOYEES"."LAST_NAME" IS 'Last name of the employee. A not null column.'
-   COMMENT ON COLUMN "EMPLOYEES"."EMAIL" IS 'Email id of the employee'
-   COMMENT ON COLUMN "EMPLOYEES"."PHONE_NUMBER" IS 'Phone number of the employee; includes country code and area code'
-   COMMENT ON COLUMN "EMPLOYEES"."HIRE_DATE" IS 'Date when the employee started on this job. A not null column.'
+   COMMENT ON COLUMN "EMPLOYEES"."EMPLOYEE_ID" IS 'Primary key of employees table.';
+   COMMENT ON COLUMN "EMPLOYEES"."FIRST_NAME" IS 'First name of the employee. A not null column.';
+   COMMENT ON COLUMN "EMPLOYEES"."LAST_NAME" IS 'Last name of the employee. A not null column.';
+   COMMENT ON COLUMN "EMPLOYEES"."EMAIL" IS 'Email id of the employee';
+   COMMENT ON COLUMN "EMPLOYEES"."PHONE_NUMBER" IS 'Phone number of the employee; includes country code and area code';
+   COMMENT ON COLUMN "EMPLOYEES"."HIRE_DATE" IS 'Date when the employee started on this job. A not null column.';
    COMMENT ON COLUMN "EMPLOYEES"."JOB_ID" IS 'Current job of the employee; foreign key to job_id column of the
-jobs table. A not null column.'
+jobs table. A not null column.';
    COMMENT ON COLUMN "EMPLOYEES"."SALARY" IS 'Monthly salary of the employee. Must be greater
-than zero (enforced by constraint emp_salary_min)'
+than zero (enforced by constraint emp_salary_min)';
    COMMENT ON COLUMN "EMPLOYEES"."COMMISSION_PCT" IS 'Commission percentage of the employee; Only employees in sales
-department elgible for commission percentage'
+department elgible for commission percentage';
    COMMENT ON COLUMN "EMPLOYEES"."MANAGER_ID" IS 'Manager id of the employee; has same domain as manager_id in
 departments table. Foreign key to employee_id column of employees table.
-(useful for reflexive joins and CONNECT BY query)'
+(useful for reflexive joins and CONNECT BY query)';
    COMMENT ON COLUMN "EMPLOYEES"."DEPARTMENT_ID" IS 'Department id where employee works; foreign key to department_id
-column of the departments table'
+column of the departments table';
    COMMENT ON TABLE "EMPLOYEES"  IS 'employees table. Contains 107 rows. References with departments,
-jobs, job_history tables. Contains a self reference.'
+jobs, job_history tables. Contains a self reference.';
 --------------------------------------------------------
 --  DDL for Table JOBS
 --------------------------------------------------------
 
   CREATE TABLE "JOBS" 
-   (	"JOB_ID" VARCHAR2(10), 
-	"JOB_TITLE" VARCHAR2(35), 
+   (	"JOB_ID" VARCHAR2(10 BYTE), 
+	"JOB_TITLE" VARCHAR2(35 BYTE), 
 	"MIN_SALARY" NUMBER(6,0), 
 	"MAX_SALARY" NUMBER(6,0)
-   ) 
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 
-   COMMENT ON COLUMN "JOBS"."JOB_ID" IS 'Primary key of jobs table.'
-   COMMENT ON COLUMN "JOBS"."JOB_TITLE" IS 'A not null column that shows job title, e.g. AD_VP, FI_ACCOUNTANT'
-   COMMENT ON COLUMN "JOBS"."MIN_SALARY" IS 'Minimum salary for a job title.'
-   COMMENT ON COLUMN "JOBS"."MAX_SALARY" IS 'Maximum salary for a job title'
+   COMMENT ON COLUMN "JOBS"."JOB_ID" IS 'Primary key of jobs table.';
+   COMMENT ON COLUMN "JOBS"."JOB_TITLE" IS 'A not null column that shows job title, e.g. AD_VP, FI_ACCOUNTANT';
+   COMMENT ON COLUMN "JOBS"."MIN_SALARY" IS 'Minimum salary for a job title.';
+   COMMENT ON COLUMN "JOBS"."MAX_SALARY" IS 'Maximum salary for a job title';
    COMMENT ON TABLE "JOBS"  IS 'jobs table with job titles and salary ranges. Contains 19 rows.
-References with employees and job_history table.'
+References with employees and job_history table.';
 --------------------------------------------------------
 --  DDL for Table JOB_HISTORY
 --------------------------------------------------------
@@ -112,62 +128,110 @@ References with employees and job_history table.'
    (	"EMPLOYEE_ID" NUMBER(6,0), 
 	"START_DATE" DATE, 
 	"END_DATE" DATE, 
-	"JOB_ID" VARCHAR2(10), 
+	"JOB_ID" VARCHAR2(10 BYTE), 
 	"DEPARTMENT_ID" NUMBER(4,0)
-   ) 
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 
    COMMENT ON COLUMN "JOB_HISTORY"."EMPLOYEE_ID" IS 'A not null column in the complex primary key employee_id+start_date.
-Foreign key to employee_id column of the employee table'
+Foreign key to employee_id column of the employee table';
    COMMENT ON COLUMN "JOB_HISTORY"."START_DATE" IS 'A not null column in the complex primary key employee_id+start_date.
 Must be less than the end_date of the job_history table. (enforced by
-constraint jhist_date_interval)'
+constraint jhist_date_interval)';
    COMMENT ON COLUMN "JOB_HISTORY"."END_DATE" IS 'Last day of the employee in this job role. A not null column. Must be
 greater than the start_date of the job_history table.
-(enforced by constraint jhist_date_interval)'
+(enforced by constraint jhist_date_interval)';
    COMMENT ON COLUMN "JOB_HISTORY"."JOB_ID" IS 'Job role in which the employee worked in the past; foreign key to
-job_id column in the jobs table. A not null column.'
-   COMMENT ON COLUMN "JOB_HISTORY"."DEPARTMENT_ID" IS 'Department id in which the employee worked in the past; foreign key to deparment_id column in the departments table'
+job_id column in the jobs table. A not null column.';
+   COMMENT ON COLUMN "JOB_HISTORY"."DEPARTMENT_ID" IS 'Department id in which the employee worked in the past; foreign key to deparment_id column in the departments table';
    COMMENT ON TABLE "JOB_HISTORY"  IS 'Table that stores job history of the employees. If an employee
 changes departments within the job or changes jobs within the department,
 new rows get inserted into this table with old job information of the
 employee. Contains a complex primary key: employee_id+start_date.
-Contains 25 rows. References with jobs, employees, and departments tables.'
+Contains 25 rows. References with jobs, employees, and departments tables.';
 --------------------------------------------------------
 --  DDL for Table LOCATIONS
 --------------------------------------------------------
 
   CREATE TABLE "LOCATIONS" 
    (	"LOCATION_ID" NUMBER(4,0), 
-	"STREET_ADDRESS" VARCHAR2(40), 
-	"POSTAL_CODE" VARCHAR2(12), 
-	"CITY" VARCHAR2(30), 
-	"STATE_PROVINCE" VARCHAR2(25), 
-	"COUNTRY_ID" CHAR(2)
-   ) 
+	"STREET_ADDRESS" VARCHAR2(40 BYTE), 
+	"POSTAL_CODE" VARCHAR2(12 BYTE), 
+	"CITY" VARCHAR2(30 BYTE), 
+	"STATE_PROVINCE" VARCHAR2(25 BYTE), 
+	"COUNTRY_ID" CHAR(2 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 
-   COMMENT ON COLUMN "LOCATIONS"."LOCATION_ID" IS 'Primary key of locations table'
+   COMMENT ON COLUMN "LOCATIONS"."LOCATION_ID" IS 'Primary key of locations table';
    COMMENT ON COLUMN "LOCATIONS"."STREET_ADDRESS" IS 'Street address of an office, warehouse, or production site of a company.
-Contains building number and street name'
+Contains building number and street name';
    COMMENT ON COLUMN "LOCATIONS"."POSTAL_CODE" IS 'Postal code of the location of an office, warehouse, or production site
-of a company. '
+of a company. ';
    COMMENT ON COLUMN "LOCATIONS"."CITY" IS 'A not null column that shows city where an office, warehouse, or
-production site of a company is located. '
+production site of a company is located. ';
    COMMENT ON COLUMN "LOCATIONS"."STATE_PROVINCE" IS 'State or Province where an office, warehouse, or production site of a
-company is located.'
+company is located.';
    COMMENT ON COLUMN "LOCATIONS"."COUNTRY_ID" IS 'Country where an office, warehouse, or production site of a company is
-located. Foreign key to country_id column of the countries table.'
+located. Foreign key to country_id column of the countries table.';
    COMMENT ON TABLE "LOCATIONS"  IS 'Locations table that contains specific address of a specific office,
 warehouse, and/or production site of a company. Does not store addresses /
 locations of customers. Contains 23 rows; references with the
-departments and countries tables. '
+departments and countries tables. ';
 --------------------------------------------------------
 --  DDL for Table REGIONS
 --------------------------------------------------------
 
   CREATE TABLE "REGIONS" 
    (	"REGION_ID" NUMBER, 
-	"REGION_NAME" VARCHAR2(25)
-   )
+	"REGION_NAME" VARCHAR2(25 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for View EMP_DETAILS_VIEW
+--------------------------------------------------------
+
+  CREATE OR REPLACE VIEW "EMP_DETAILS_VIEW" ("EMPLOYEE_ID", "JOB_ID", "MANAGER_ID", "DEPARTMENT_ID", "LOCATION_ID", "COUNTRY_ID", "FIRST_NAME", "LAST_NAME", "SALARY", "COMMISSION_PCT", "DEPARTMENT_NAME", "JOB_TITLE", "CITY", "STATE_PROVINCE", "COUNTRY_NAME", "REGION_NAME") AS 
+  SELECT
+  e.employee_id,
+  e.job_id,
+  e.manager_id,
+  e.department_id,
+  d.location_id,
+  l.country_id,
+  e.first_name,
+  e.last_name,
+  e.salary,
+  e.commission_pct,
+  d.department_name,
+  j.job_title,
+  l.city,
+  l.state_province,
+  c.country_name,
+  r.region_name
+FROM
+  employees e,
+  departments d,
+  jobs j,
+  locations l,
+  countries c,
+  regions r
+WHERE e.department_id = d.department_id
+  AND d.location_id = l.location_id
+  AND l.country_id = c.country_id
+  AND c.region_id = r.region_id
+  AND j.job_id = e.job_id
+WITH READ ONLY
+;
 REM INSERTING into COUNTRIES
 SET DEFINE OFF;
 Insert into COUNTRIES (COUNTRY_ID,COUNTRY_NAME,REGION_ID) values ('AR','Argentina',2);
@@ -397,196 +461,456 @@ Insert into REGIONS (REGION_ID,REGION_NAME) values (1,'Europe');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (2,'Americas');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (3,'Asia');
 Insert into REGIONS (REGION_ID,REGION_NAME) values (4,'Middle East and Africa');
+REM INSERTING into EMP_DETAILS_VIEW
+SET DEFINE OFF;
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (100,'AD_PRES',null,90,1700,'US','Steven','King',24000,null,'Executive','President','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (101,'AD_VP',100,90,1700,'US','Neena','Kochhar',17000,null,'Executive','Administration Vice President','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (102,'AD_VP',100,90,1700,'US','Lex','De Haan',17000,null,'Executive','Administration Vice President','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (103,'IT_PROG',102,60,1400,'US','Alexander','Hunold',9000,null,'IT','Programmer','Southlake','Texas','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (104,'IT_PROG',103,60,1400,'US','Bruce','Ernst',6000,null,'IT','Programmer','Southlake','Texas','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (105,'IT_PROG',103,60,1400,'US','David','Austin',4800,null,'IT','Programmer','Southlake','Texas','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (106,'IT_PROG',103,60,1400,'US','Valli','Pataballa',4800,null,'IT','Programmer','Southlake','Texas','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (107,'IT_PROG',103,60,1400,'US','Diana','Lorentz',4200,null,'IT','Programmer','Southlake','Texas','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (108,'FI_MGR',101,100,1700,'US','Nancy','Greenberg',12008,null,'Finance','Finance Manager','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (109,'FI_ACCOUNT',108,100,1700,'US','Daniel','Faviet',9000,null,'Finance','Accountant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (110,'FI_ACCOUNT',108,100,1700,'US','John','Chen',8200,null,'Finance','Accountant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (111,'FI_ACCOUNT',108,100,1700,'US','Ismael','Sciarra',7700,null,'Finance','Accountant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (112,'FI_ACCOUNT',108,100,1700,'US','Jose Manuel','Urman',7800,null,'Finance','Accountant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (113,'FI_ACCOUNT',108,100,1700,'US','Luis','Popp',6900,null,'Finance','Accountant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (114,'PU_MAN',100,30,1700,'US','Den','Raphaely',11000,null,'Purchasing','Purchasing Manager','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (115,'PU_CLERK',114,30,1700,'US','Alexander','Khoo',3100,null,'Purchasing','Purchasing Clerk','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (116,'PU_CLERK',114,30,1700,'US','Shelli','Baida',2900,null,'Purchasing','Purchasing Clerk','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (117,'PU_CLERK',114,30,1700,'US','Sigal','Tobias',2800,null,'Purchasing','Purchasing Clerk','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (118,'PU_CLERK',114,30,1700,'US','Guy','Himuro',2600,null,'Purchasing','Purchasing Clerk','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (119,'PU_CLERK',114,30,1700,'US','Karen','Colmenares',2500,null,'Purchasing','Purchasing Clerk','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (120,'ST_MAN',100,50,1500,'US','Matthew','Weiss',8000,null,'Shipping','Stock Manager','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (121,'ST_MAN',100,50,1500,'US','Adam','Fripp',8200,null,'Shipping','Stock Manager','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (122,'ST_MAN',100,50,1500,'US','Payam','Kaufling',7900,null,'Shipping','Stock Manager','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (123,'ST_MAN',100,50,1500,'US','Shanta','Vollman',6500,null,'Shipping','Stock Manager','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (124,'ST_MAN',100,50,1500,'US','Kevin','Mourgos',5800,null,'Shipping','Stock Manager','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (125,'ST_CLERK',120,50,1500,'US','Julia','Nayer',3200,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (126,'ST_CLERK',120,50,1500,'US','Irene','Mikkilineni',2700,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (127,'ST_CLERK',120,50,1500,'US','James','Landry',2400,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (128,'ST_CLERK',120,50,1500,'US','Steven','Markle',2200,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (129,'ST_CLERK',121,50,1500,'US','Laura','Bissot',3300,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (130,'ST_CLERK',121,50,1500,'US','Mozhe','Atkinson',2800,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (131,'ST_CLERK',121,50,1500,'US','James','Marlow',2500,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (132,'ST_CLERK',121,50,1500,'US','TJ','Olson',2100,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (133,'ST_CLERK',122,50,1500,'US','Jason','Mallin',3300,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (134,'ST_CLERK',122,50,1500,'US','Michael','Rogers',2900,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (135,'ST_CLERK',122,50,1500,'US','Ki','Gee',2400,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (136,'ST_CLERK',122,50,1500,'US','Hazel','Philtanker',2200,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (137,'ST_CLERK',123,50,1500,'US','Renske','Ladwig',3600,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (138,'ST_CLERK',123,50,1500,'US','Stephen','Stiles',3200,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (139,'ST_CLERK',123,50,1500,'US','John','Seo',2700,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (140,'ST_CLERK',123,50,1500,'US','Joshua','Patel',2500,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (141,'ST_CLERK',124,50,1500,'US','Trenna','Rajs',3500,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (142,'ST_CLERK',124,50,1500,'US','Curtis','Davies',3100,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (143,'ST_CLERK',124,50,1500,'US','Randall','Matos',2600,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (144,'ST_CLERK',124,50,1500,'US','Peter','Vargas',2500,null,'Shipping','Stock Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (145,'SA_MAN',100,80,2500,'UK','John','Russell',14000,0.4,'Sales','Sales Manager','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (146,'SA_MAN',100,80,2500,'UK','Karen','Partners',13500,0.3,'Sales','Sales Manager','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (147,'SA_MAN',100,80,2500,'UK','Alberto','Errazuriz',12000,0.3,'Sales','Sales Manager','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (148,'SA_MAN',100,80,2500,'UK','Gerald','Cambrault',11000,0.3,'Sales','Sales Manager','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (149,'SA_MAN',100,80,2500,'UK','Eleni','Zlotkey',10500,0.2,'Sales','Sales Manager','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (150,'SA_REP',145,80,2500,'UK','Peter','Tucker',10000,0.3,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (151,'SA_REP',145,80,2500,'UK','David','Bernstein',9500,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (152,'SA_REP',145,80,2500,'UK','Peter','Hall',9000,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (153,'SA_REP',145,80,2500,'UK','Christopher','Olsen',8000,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (154,'SA_REP',145,80,2500,'UK','Nanette','Cambrault',7500,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (155,'SA_REP',145,80,2500,'UK','Oliver','Tuvault',7000,0.15,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (156,'SA_REP',146,80,2500,'UK','Janette','King',10000,0.35,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (157,'SA_REP',146,80,2500,'UK','Patrick','Sully',9500,0.35,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (158,'SA_REP',146,80,2500,'UK','Allan','McEwen',9000,0.35,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (159,'SA_REP',146,80,2500,'UK','Lindsey','Smith',8000,0.3,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (160,'SA_REP',146,80,2500,'UK','Louise','Doran',7500,0.3,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (161,'SA_REP',146,80,2500,'UK','Sarath','Sewall',7000,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (162,'SA_REP',147,80,2500,'UK','Clara','Vishney',10500,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (163,'SA_REP',147,80,2500,'UK','Danielle','Greene',9500,0.15,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (164,'SA_REP',147,80,2500,'UK','Mattea','Marvins',7200,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (165,'SA_REP',147,80,2500,'UK','David','Lee',6800,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (166,'SA_REP',147,80,2500,'UK','Sundar','Ande',6400,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (167,'SA_REP',147,80,2500,'UK','Amit','Banda',6200,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (168,'SA_REP',148,80,2500,'UK','Lisa','Ozer',11500,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (169,'SA_REP',148,80,2500,'UK','Harrison','Bloom',10000,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (170,'SA_REP',148,80,2500,'UK','Tayler','Fox',9600,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (171,'SA_REP',148,80,2500,'UK','William','Smith',7400,0.15,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (172,'SA_REP',148,80,2500,'UK','Elizabeth','Bates',7300,0.15,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (173,'SA_REP',148,80,2500,'UK','Sundita','Kumar',6100,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (174,'SA_REP',149,80,2500,'UK','Ellen','Abel',11000,0.3,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (175,'SA_REP',149,80,2500,'UK','Alyssa','Hutton',8800,0.25,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (176,'SA_REP',149,80,2500,'UK','Jonathon','Taylor',8600,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (177,'SA_REP',149,80,2500,'UK','Jack','Livingston',8400,0.2,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (179,'SA_REP',149,80,2500,'UK','Charles','Johnson',6200,0.1,'Sales','Sales Representative','Oxford','Oxford','United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (180,'SH_CLERK',120,50,1500,'US','Winston','Taylor',3200,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (181,'SH_CLERK',120,50,1500,'US','Jean','Fleaur',3100,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (182,'SH_CLERK',120,50,1500,'US','Martha','Sullivan',2500,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (183,'SH_CLERK',120,50,1500,'US','Girard','Geoni',2800,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (184,'SH_CLERK',121,50,1500,'US','Nandita','Sarchand',4200,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (185,'SH_CLERK',121,50,1500,'US','Alexis','Bull',4100,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (186,'SH_CLERK',121,50,1500,'US','Julia','Dellinger',3400,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (187,'SH_CLERK',121,50,1500,'US','Anthony','Cabrio',3000,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (188,'SH_CLERK',122,50,1500,'US','Kelly','Chung',3800,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (189,'SH_CLERK',122,50,1500,'US','Jennifer','Dilly',3600,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (190,'SH_CLERK',122,50,1500,'US','Timothy','Gates',2900,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (191,'SH_CLERK',122,50,1500,'US','Randall','Perkins',2500,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (192,'SH_CLERK',123,50,1500,'US','Sarah','Bell',4000,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (193,'SH_CLERK',123,50,1500,'US','Britney','Everett',3900,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (194,'SH_CLERK',123,50,1500,'US','Samuel','McCain',3200,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (195,'SH_CLERK',123,50,1500,'US','Vance','Jones',2800,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (196,'SH_CLERK',124,50,1500,'US','Alana','Walsh',3100,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (197,'SH_CLERK',124,50,1500,'US','Kevin','Feeney',3000,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (198,'SH_CLERK',124,50,1500,'US','Donald','OConnell',2600,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (199,'SH_CLERK',124,50,1500,'US','Douglas','Grant',2600,null,'Shipping','Shipping Clerk','South San Francisco','California','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (200,'AD_ASST',101,10,1700,'US','Jennifer','Whalen',4400,null,'Administration','Administration Assistant','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (201,'MK_MAN',100,20,1800,'CA','Michael','Hartstein',13000,null,'Marketing','Marketing Manager','Toronto','Ontario','Canada','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (202,'MK_REP',201,20,1800,'CA','Pat','Fay',6000,null,'Marketing','Marketing Representative','Toronto','Ontario','Canada','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (203,'HR_REP',101,40,2400,'UK','Susan','Mavris',6500,null,'Human Resources','Human Resources Representative','London',null,'United Kingdom','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (204,'PR_REP',101,70,2700,'DE','Hermann','Baer',10000,null,'Public Relations','Public Relations Representative','Munich','Bavaria','Germany','Europe');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (205,'AC_MGR',101,110,1700,'US','Shelley','Higgins',12008,null,'Accounting','Accounting Manager','Seattle','Washington','United States of America','Americas');
+Insert into EMP_DETAILS_VIEW (EMPLOYEE_ID,JOB_ID,MANAGER_ID,DEPARTMENT_ID,LOCATION_ID,COUNTRY_ID,FIRST_NAME,LAST_NAME,SALARY,COMMISSION_PCT,DEPARTMENT_NAME,JOB_TITLE,CITY,STATE_PROVINCE,COUNTRY_NAME,REGION_NAME) values (206,'AC_ACCOUNT',205,110,1700,'US','William','Gietz',8300,null,'Accounting','Public Accountant','Seattle','Washington','United States of America','Americas');
 --------------------------------------------------------
 --  DDL for Index COUNTRY_C_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "COUNTRY_C_ID_PK" ON "COUNTRIES" ("COUNTRY_ID")
+  CREATE UNIQUE INDEX "COUNTRY_C_ID_PK" ON "COUNTRIES" ("COUNTRY_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index DEPT_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "DEPT_ID_PK" ON "DEPARTMENTS" ("DEPARTMENT_ID")
+  CREATE UNIQUE INDEX "DEPT_ID_PK" ON "DEPARTMENTS" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index DEPT_LOCATION_IX
 --------------------------------------------------------
 
-  CREATE INDEX "DEPT_LOCATION_IX" ON "DEPARTMENTS" ("LOCATION_ID")
+  CREATE INDEX "DEPT_LOCATION_IX" ON "DEPARTMENTS" ("LOCATION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_DEPARTMENT_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_DEPARTMENT_IX" ON "EMPLOYEES" ("DEPARTMENT_ID")
+  CREATE INDEX "EMP_DEPARTMENT_IX" ON "EMPLOYEES" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_EMAIL_UK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "EMP_EMAIL_UK" ON "EMPLOYEES" ("EMAIL")
+  CREATE UNIQUE INDEX "EMP_EMAIL_UK" ON "EMPLOYEES" ("EMAIL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_EMP_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "EMP_EMP_ID_PK" ON "EMPLOYEES" ("EMPLOYEE_ID")
+  CREATE UNIQUE INDEX "EMP_EMP_ID_PK" ON "EMPLOYEES" ("EMPLOYEE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_JOB_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_JOB_IX" ON "EMPLOYEES" ("JOB_ID")
+  CREATE INDEX "EMP_JOB_IX" ON "EMPLOYEES" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_MANAGER_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_MANAGER_IX" ON "EMPLOYEES" ("MANAGER_ID")
+  CREATE INDEX "EMP_MANAGER_IX" ON "EMPLOYEES" ("MANAGER_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_NAME_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_NAME_IX" ON "EMPLOYEES" ("LAST_NAME", "FIRST_NAME")
+  CREATE INDEX "EMP_NAME_IX" ON "EMPLOYEES" ("LAST_NAME", "FIRST_NAME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_DEPARTMENT_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_DEPARTMENT_IX" ON "JOB_HISTORY" ("DEPARTMENT_ID")
+  CREATE INDEX "JHIST_DEPARTMENT_IX" ON "JOB_HISTORY" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_EMPLOYEE_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_EMPLOYEE_IX" ON "JOB_HISTORY" ("EMPLOYEE_ID")
+  CREATE INDEX "JHIST_EMPLOYEE_IX" ON "JOB_HISTORY" ("EMPLOYEE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_EMP_ID_ST_DATE_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "JHIST_EMP_ID_ST_DATE_PK" ON "JOB_HISTORY" ("EMPLOYEE_ID", "START_DATE")
+  CREATE UNIQUE INDEX "JHIST_EMP_ID_ST_DATE_PK" ON "JOB_HISTORY" ("EMPLOYEE_ID", "START_DATE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_JOB_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_JOB_IX" ON "JOB_HISTORY" ("JOB_ID")
+  CREATE INDEX "JHIST_JOB_IX" ON "JOB_HISTORY" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JOB_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "JOB_ID_PK" ON "JOBS" ("JOB_ID")
+  CREATE UNIQUE INDEX "JOB_ID_PK" ON "JOBS" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_CITY_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_CITY_IX" ON "LOCATIONS" ("CITY")
+  CREATE INDEX "LOC_CITY_IX" ON "LOCATIONS" ("CITY") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_COUNTRY_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_COUNTRY_IX" ON "LOCATIONS" ("COUNTRY_ID")
+  CREATE INDEX "LOC_COUNTRY_IX" ON "LOCATIONS" ("COUNTRY_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "LOC_ID_PK" ON "LOCATIONS" ("LOCATION_ID")
+  CREATE UNIQUE INDEX "LOC_ID_PK" ON "LOCATIONS" ("LOCATION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_STATE_PROVINCE_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_STATE_PROVINCE_IX" ON "LOCATIONS" ("STATE_PROVINCE")
+  CREATE INDEX "LOC_STATE_PROVINCE_IX" ON "LOCATIONS" ("STATE_PROVINCE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index REG_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "REG_ID_PK" ON "REGIONS" ("REGION_ID")
+  CREATE UNIQUE INDEX "REG_ID_PK" ON "REGIONS" ("REGION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index COUNTRY_C_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "COUNTRY_C_ID_PK" ON "COUNTRIES" ("COUNTRY_ID")
+  CREATE UNIQUE INDEX "COUNTRY_C_ID_PK" ON "COUNTRIES" ("COUNTRY_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index DEPT_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "DEPT_ID_PK" ON "DEPARTMENTS" ("DEPARTMENT_ID")
+  CREATE UNIQUE INDEX "DEPT_ID_PK" ON "DEPARTMENTS" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index DEPT_LOCATION_IX
 --------------------------------------------------------
 
-  CREATE INDEX "DEPT_LOCATION_IX" ON "DEPARTMENTS" ("LOCATION_ID")
+  CREATE INDEX "DEPT_LOCATION_IX" ON "DEPARTMENTS" ("LOCATION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_EMAIL_UK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "EMP_EMAIL_UK" ON "EMPLOYEES" ("EMAIL")
+  CREATE UNIQUE INDEX "EMP_EMAIL_UK" ON "EMPLOYEES" ("EMAIL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_EMP_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "EMP_EMP_ID_PK" ON "EMPLOYEES" ("EMPLOYEE_ID")
+  CREATE UNIQUE INDEX "EMP_EMP_ID_PK" ON "EMPLOYEES" ("EMPLOYEE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_DEPARTMENT_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_DEPARTMENT_IX" ON "EMPLOYEES" ("DEPARTMENT_ID")
+  CREATE INDEX "EMP_DEPARTMENT_IX" ON "EMPLOYEES" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_JOB_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_JOB_IX" ON "EMPLOYEES" ("JOB_ID")
+  CREATE INDEX "EMP_JOB_IX" ON "EMPLOYEES" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_MANAGER_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_MANAGER_IX" ON "EMPLOYEES" ("MANAGER_ID")
+  CREATE INDEX "EMP_MANAGER_IX" ON "EMPLOYEES" ("MANAGER_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index EMP_NAME_IX
 --------------------------------------------------------
 
-  CREATE INDEX "EMP_NAME_IX" ON "EMPLOYEES" ("LAST_NAME", "FIRST_NAME")
+  CREATE INDEX "EMP_NAME_IX" ON "EMPLOYEES" ("LAST_NAME", "FIRST_NAME") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JOB_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "JOB_ID_PK" ON "JOBS" ("JOB_ID")
+  CREATE UNIQUE INDEX "JOB_ID_PK" ON "JOBS" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_EMP_ID_ST_DATE_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "JHIST_EMP_ID_ST_DATE_PK" ON "JOB_HISTORY" ("EMPLOYEE_ID", "START_DATE")
+  CREATE UNIQUE INDEX "JHIST_EMP_ID_ST_DATE_PK" ON "JOB_HISTORY" ("EMPLOYEE_ID", "START_DATE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_JOB_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_JOB_IX" ON "JOB_HISTORY" ("JOB_ID")
+  CREATE INDEX "JHIST_JOB_IX" ON "JOB_HISTORY" ("JOB_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_EMPLOYEE_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_EMPLOYEE_IX" ON "JOB_HISTORY" ("EMPLOYEE_ID")
+  CREATE INDEX "JHIST_EMPLOYEE_IX" ON "JOB_HISTORY" ("EMPLOYEE_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index JHIST_DEPARTMENT_IX
 --------------------------------------------------------
 
-  CREATE INDEX "JHIST_DEPARTMENT_IX" ON "JOB_HISTORY" ("DEPARTMENT_ID")
+  CREATE INDEX "JHIST_DEPARTMENT_IX" ON "JOB_HISTORY" ("DEPARTMENT_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "LOC_ID_PK" ON "LOCATIONS" ("LOCATION_ID")
+  CREATE UNIQUE INDEX "LOC_ID_PK" ON "LOCATIONS" ("LOCATION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_CITY_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_CITY_IX" ON "LOCATIONS" ("CITY")
+  CREATE INDEX "LOC_CITY_IX" ON "LOCATIONS" ("CITY") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_STATE_PROVINCE_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_STATE_PROVINCE_IX" ON "LOCATIONS" ("STATE_PROVINCE")
+  CREATE INDEX "LOC_STATE_PROVINCE_IX" ON "LOCATIONS" ("STATE_PROVINCE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index LOC_COUNTRY_IX
 --------------------------------------------------------
 
-  CREATE INDEX "LOC_COUNTRY_IX" ON "LOCATIONS" ("COUNTRY_ID")
+  CREATE INDEX "LOC_COUNTRY_IX" ON "LOCATIONS" ("COUNTRY_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Index REG_ID_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "REG_ID_PK" ON "REGIONS" ("REGION_ID")
+  CREATE UNIQUE INDEX "REG_ID_PK" ON "REGIONS" ("REGION_ID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
 --------------------------------------------------------
 --  DDL for Trigger SECURE_EMPLOYEES
 --------------------------------------------------------
@@ -596,7 +920,8 @@ Insert into REGIONS (REGION_ID,REGION_NAME) values (4,'Middle East and Africa');
 BEGIN
   secure_dml;
 END secure_employees;
-ALTER TRIGGER "SECURE_EMPLOYEES" DISABLE
+/
+ALTER TRIGGER "SECURE_EMPLOYEES" DISABLE;
 --------------------------------------------------------
 --  DDL for Trigger UPDATE_JOB_HISTORY
 --------------------------------------------------------
@@ -608,7 +933,8 @@ BEGIN
   add_job_history(:old.employee_id, :old.hire_date, sysdate,
                   :old.job_id, :old.department_id);
 END;
-ALTER TRIGGER "UPDATE_JOB_HISTORY" ENABLE
+/
+ALTER TRIGGER "UPDATE_JOB_HISTORY" ENABLE;
 --------------------------------------------------------
 --  DDL for Trigger SECURE_EMPLOYEES
 --------------------------------------------------------
@@ -618,7 +944,8 @@ ALTER TRIGGER "UPDATE_JOB_HISTORY" ENABLE
 BEGIN
   secure_dml;
 END secure_employees;
-ALTER TRIGGER "SECURE_EMPLOYEES" DISABLE
+/
+ALTER TRIGGER "SECURE_EMPLOYEES" DISABLE;
 --------------------------------------------------------
 --  DDL for Trigger UPDATE_JOB_HISTORY
 --------------------------------------------------------
@@ -630,95 +957,164 @@ BEGIN
   add_job_history(:old.employee_id, :old.hire_date, sysdate,
                   :old.job_id, :old.department_id);
 END;
-ALTER TRIGGER "UPDATE_JOB_HISTORY" ENABLE
+/
+ALTER TRIGGER "UPDATE_JOB_HISTORY" ENABLE;
+--------------------------------------------------------
+--  DDL for Procedure ADD_JOB_HISTORY
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "ADD_JOB_HISTORY" 
+  (  p_emp_id          job_history.employee_id%type
+   , p_start_date      job_history.start_date%type
+   , p_end_date        job_history.end_date%type
+   , p_job_id          job_history.job_id%type
+   , p_department_id   job_history.department_id%type
+   )
+IS
+BEGIN
+  INSERT INTO job_history (employee_id, start_date, end_date,
+                           job_id, department_id)
+    VALUES(p_emp_id, p_start_date, p_end_date, p_job_id, p_department_id);
+END add_job_history;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure SECURE_DML
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "SECURE_DML" 
+IS
+BEGIN
+  IF TO_CHAR (SYSDATE, 'HH24:MI') NOT BETWEEN '08:00' AND '18:00'
+        OR TO_CHAR (SYSDATE, 'DY') IN ('SAT', 'SUN') THEN
+	RAISE_APPLICATION_ERROR (-20205,
+		'You may only make changes during normal office hours');
+  END IF;
+END secure_dml;
+
+/
 --------------------------------------------------------
 --  Constraints for Table COUNTRIES
 --------------------------------------------------------
 
-  ALTER TABLE "COUNTRIES" ADD CONSTRAINT "COUNTRY_C_ID_PK" PRIMARY KEY ("COUNTRY_ID") ENABLE
-  ALTER TABLE "COUNTRIES" MODIFY ("COUNTRY_ID" CONSTRAINT "COUNTRY_ID_NN" NOT NULL ENABLE)
+  ALTER TABLE "COUNTRIES" ADD CONSTRAINT "COUNTRY_C_ID_PK" PRIMARY KEY ("COUNTRY_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "COUNTRIES" MODIFY ("COUNTRY_ID" CONSTRAINT "COUNTRY_ID_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table DEPARTMENTS
 --------------------------------------------------------
 
-  ALTER TABLE "DEPARTMENTS" ADD CONSTRAINT "DEPT_ID_PK" PRIMARY KEY ("DEPARTMENT_ID") ENABLE
-  ALTER TABLE "DEPARTMENTS" MODIFY ("DEPARTMENT_NAME" CONSTRAINT "DEPT_NAME_NN" NOT NULL ENABLE)
+  ALTER TABLE "DEPARTMENTS" ADD CONSTRAINT "DEPT_ID_PK" PRIMARY KEY ("DEPARTMENT_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "DEPARTMENTS" MODIFY ("DEPARTMENT_NAME" CONSTRAINT "DEPT_NAME_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table EMPLOYEES
 --------------------------------------------------------
 
-  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_EMP_ID_PK" PRIMARY KEY ("EMPLOYEE_ID") ENABLE
-  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_EMAIL_UK" UNIQUE ("EMAIL") ENABLE
-  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_SALARY_MIN" CHECK (salary > 0) ENABLE
-  ALTER TABLE "EMPLOYEES" MODIFY ("JOB_ID" CONSTRAINT "EMP_JOB_NN" NOT NULL ENABLE)
-  ALTER TABLE "EMPLOYEES" MODIFY ("HIRE_DATE" CONSTRAINT "EMP_HIRE_DATE_NN" NOT NULL ENABLE)
-  ALTER TABLE "EMPLOYEES" MODIFY ("EMAIL" CONSTRAINT "EMP_EMAIL_NN" NOT NULL ENABLE)
-  ALTER TABLE "EMPLOYEES" MODIFY ("LAST_NAME" CONSTRAINT "EMP_LAST_NAME_NN" NOT NULL ENABLE)
+  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_EMP_ID_PK" PRIMARY KEY ("EMPLOYEE_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_EMAIL_UK" UNIQUE ("EMAIL")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_SALARY_MIN" CHECK (salary > 0) ENABLE;
+  ALTER TABLE "EMPLOYEES" MODIFY ("JOB_ID" CONSTRAINT "EMP_JOB_NN" NOT NULL ENABLE);
+  ALTER TABLE "EMPLOYEES" MODIFY ("HIRE_DATE" CONSTRAINT "EMP_HIRE_DATE_NN" NOT NULL ENABLE);
+  ALTER TABLE "EMPLOYEES" MODIFY ("EMAIL" CONSTRAINT "EMP_EMAIL_NN" NOT NULL ENABLE);
+  ALTER TABLE "EMPLOYEES" MODIFY ("LAST_NAME" CONSTRAINT "EMP_LAST_NAME_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table JOBS
 --------------------------------------------------------
 
-  ALTER TABLE "JOBS" ADD CONSTRAINT "JOB_ID_PK" PRIMARY KEY ("JOB_ID") ENABLE
-  ALTER TABLE "JOBS" MODIFY ("JOB_TITLE" CONSTRAINT "JOB_TITLE_NN" NOT NULL ENABLE)
+  ALTER TABLE "JOBS" ADD CONSTRAINT "JOB_ID_PK" PRIMARY KEY ("JOB_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "JOBS" MODIFY ("JOB_TITLE" CONSTRAINT "JOB_TITLE_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table JOB_HISTORY
 --------------------------------------------------------
 
-  ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_EMP_ID_ST_DATE_PK" PRIMARY KEY ("EMPLOYEE_ID", "START_DATE") ENABLE
-  ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_DATE_INTERVAL" CHECK (end_date > start_date) ENABLE
-  ALTER TABLE "JOB_HISTORY" MODIFY ("JOB_ID" CONSTRAINT "JHIST_JOB_NN" NOT NULL ENABLE)
-  ALTER TABLE "JOB_HISTORY" MODIFY ("END_DATE" CONSTRAINT "JHIST_END_DATE_NN" NOT NULL ENABLE)
-  ALTER TABLE "JOB_HISTORY" MODIFY ("START_DATE" CONSTRAINT "JHIST_START_DATE_NN" NOT NULL ENABLE)
-  ALTER TABLE "JOB_HISTORY" MODIFY ("EMPLOYEE_ID" CONSTRAINT "JHIST_EMPLOYEE_NN" NOT NULL ENABLE)
+  ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_EMP_ID_ST_DATE_PK" PRIMARY KEY ("EMPLOYEE_ID", "START_DATE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_DATE_INTERVAL" CHECK (end_date > start_date) ENABLE;
+  ALTER TABLE "JOB_HISTORY" MODIFY ("JOB_ID" CONSTRAINT "JHIST_JOB_NN" NOT NULL ENABLE);
+  ALTER TABLE "JOB_HISTORY" MODIFY ("END_DATE" CONSTRAINT "JHIST_END_DATE_NN" NOT NULL ENABLE);
+  ALTER TABLE "JOB_HISTORY" MODIFY ("START_DATE" CONSTRAINT "JHIST_START_DATE_NN" NOT NULL ENABLE);
+  ALTER TABLE "JOB_HISTORY" MODIFY ("EMPLOYEE_ID" CONSTRAINT "JHIST_EMPLOYEE_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table LOCATIONS
 --------------------------------------------------------
 
-  ALTER TABLE "LOCATIONS" ADD CONSTRAINT "LOC_ID_PK" PRIMARY KEY ("LOCATION_ID") ENABLE
-  ALTER TABLE "LOCATIONS" MODIFY ("CITY" CONSTRAINT "LOC_CITY_NN" NOT NULL ENABLE)
+  ALTER TABLE "LOCATIONS" ADD CONSTRAINT "LOC_ID_PK" PRIMARY KEY ("LOCATION_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "LOCATIONS" MODIFY ("CITY" CONSTRAINT "LOC_CITY_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table REGIONS
 --------------------------------------------------------
 
-  ALTER TABLE "REGIONS" ADD CONSTRAINT "REG_ID_PK" PRIMARY KEY ("REGION_ID") ENABLE
-  ALTER TABLE "REGIONS" MODIFY ("REGION_ID" CONSTRAINT "REGION_ID_NN" NOT NULL ENABLE)
+  ALTER TABLE "REGIONS" ADD CONSTRAINT "REG_ID_PK" PRIMARY KEY ("REGION_ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "REGIONS" MODIFY ("REGION_ID" CONSTRAINT "REGION_ID_NN" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Ref Constraints for Table COUNTRIES
 --------------------------------------------------------
 
   ALTER TABLE "COUNTRIES" ADD CONSTRAINT "COUNTR_REG_FK" FOREIGN KEY ("REGION_ID")
-	  REFERENCES "REGIONS" ("REGION_ID") ENABLE
+	  REFERENCES "REGIONS" ("REGION_ID") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table DEPARTMENTS
 --------------------------------------------------------
 
   ALTER TABLE "DEPARTMENTS" ADD CONSTRAINT "DEPT_LOC_FK" FOREIGN KEY ("LOCATION_ID")
-	  REFERENCES "LOCATIONS" ("LOCATION_ID") ENABLE
+	  REFERENCES "LOCATIONS" ("LOCATION_ID") ENABLE;
   ALTER TABLE "DEPARTMENTS" ADD CONSTRAINT "DEPT_MGR_FK" FOREIGN KEY ("MANAGER_ID")
-	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE
+	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table EMPLOYEES
 --------------------------------------------------------
 
   ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_DEPT_FK" FOREIGN KEY ("DEPARTMENT_ID")
-	  REFERENCES "DEPARTMENTS" ("DEPARTMENT_ID") ENABLE
+	  REFERENCES "DEPARTMENTS" ("DEPARTMENT_ID") ENABLE;
   ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_JOB_FK" FOREIGN KEY ("JOB_ID")
-	  REFERENCES "JOBS" ("JOB_ID") ENABLE
+	  REFERENCES "JOBS" ("JOB_ID") ENABLE;
   ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_MANAGER_FK" FOREIGN KEY ("MANAGER_ID")
-	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE
+	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table JOB_HISTORY
 --------------------------------------------------------
 
   ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_DEPT_FK" FOREIGN KEY ("DEPARTMENT_ID")
-	  REFERENCES "DEPARTMENTS" ("DEPARTMENT_ID") ENABLE
+	  REFERENCES "DEPARTMENTS" ("DEPARTMENT_ID") ENABLE;
   ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_EMP_FK" FOREIGN KEY ("EMPLOYEE_ID")
-	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE
+	  REFERENCES "EMPLOYEES" ("EMPLOYEE_ID") ENABLE;
   ALTER TABLE "JOB_HISTORY" ADD CONSTRAINT "JHIST_JOB_FK" FOREIGN KEY ("JOB_ID")
-	  REFERENCES "JOBS" ("JOB_ID") ENABLE
+	  REFERENCES "JOBS" ("JOB_ID") ENABLE;
 --------------------------------------------------------
 --  Ref Constraints for Table LOCATIONS
 --------------------------------------------------------
 
   ALTER TABLE "LOCATIONS" ADD CONSTRAINT "LOC_C_ID_FK" FOREIGN KEY ("COUNTRY_ID")
-	  REFERENCES "COUNTRIES" ("COUNTRY_ID") ENABLE
+	  REFERENCES "COUNTRIES" ("COUNTRY_ID") ENABLE;
