@@ -86,5 +86,25 @@ create table ex_06 (
 );
 
 
+-- primary key(고유키)와 foreign key(외래키)
+create table ex_dept (
+    deptno  number(2) primary key,
+    dname   varchar2(10)
+);
 
+create table ex_emp (
+    empno   number(4) primary key,
+    ename   varchar2(100),
+    deptno  number(2) references ex_dept(deptno)
+);
 
+select * from ex_dept;  -- 0개 row
+select * from ex_emp; -- 0개 row
+
+insert into ex_emp values (1000, '오쌤', 10);
+-- 실패: 부서번호 10이 ex_dept 테이블에 존재하지 않기 때문에
+
+insert into ex_dept values (10, '인사부');
+insert into ex_dept values (20, '개발실');
+insert into ex_emp values (1000, '오쌤', 10);  -- 성공
+insert into ex_emp values (1001, '홍길동', 30);  -- 실패
