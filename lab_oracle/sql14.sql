@@ -54,4 +54,27 @@ select constraint_name, table_name from user_constraints;
   3) order_method: 주문 방법. 8 byte 문자열. ('online', 'offline') 중 1개 값만 가능.
   4) cust_id: 주문 고객 아이디. 20 byte 문자열. not null. customers(cust_id)를 참조.
 */
+create table orders (
+    order_id        number(4)
+                    constraint pk_orders primary key,
+    order_date      date default sysdate,
+    order_method    varchar2(8)
+                    constraint ck_oreders_method check (order_method in ('online', 'offline')),
+    cust_id         varchar2(20)
+                    constraint nn_orders_cust_id not null
+                    constraint fk_orders references customers (cust_id)
+);
+
+
+create table orders2 (
+    order_id        number(4),
+    order_date      date default sysdate,
+    order_method    varchar2(8),
+    cust_id         varchar2(20),
+    
+    constraint pk_orders2 primary key (order_id),
+    constraint ck_orders2_method check (order_method in ('online', 'offline')),
+    constraint nn_orders2_cust_id check (cust_id is not null),
+    constraint fk_orders2 foreign key (cust_id) references customers2 (cust_id)
+);
 
