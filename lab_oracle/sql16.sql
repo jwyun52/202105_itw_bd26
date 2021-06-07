@@ -115,3 +115,10 @@ select * from emp;
 -- 6. deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약 조건 추가
 -- delete from test_emp where empno = 1004;
 
+-- 7. ename 컬럼에 not null 제약조건 추가
+
+-- 8. 7에서 만든 제약조건 삭제
+
+-- 9. comm 컬럼 삭제
+
+-- 10. test_emp 테이블 삭제
