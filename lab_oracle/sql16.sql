@@ -112,7 +112,8 @@ select * from emp;
 -- 5. empno 컬럼에 primary key 제약조건 추가.
 
 
--- 6. deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약 조건 추가
+-- 6. dept 테이블의 deptno에 고유키 제약조건을 추가한 후, 
+-- deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약 조건 추가
 -- delete from test_emp where empno = 1004;
 
 -- 7. ename 컬럼에 not null 제약조건 추가
