@@ -1,0 +1,3 @@
+-- call_chicken.csv 파일 다운로드
+-- 테이블 이름: call_chicken
+-- 컬럼: call_date, call_day, gu, ages, gender, calls
