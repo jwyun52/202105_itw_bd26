@@ -106,3 +106,46 @@ where hiredate > (select max(hiredate) from emp where deptno = 10);
 
 -- 위의 작업 내용을 데이터베이스 영구히 저장.
 commit;
+
+
+-- 테이블 행(레코드) 삭제
+delete from emp;  -- where 조건절이 없으면 테이블의 모든 행을 삭제
+
+select * from emp;
+
+rollback;
+
+select * from emp;
+
+-- 사번이 1004인 직원의 레코드(행) 삭제
+delete from emp where empno = 1004;
+
+-- ALLEN의 레코드 삭제
+delete from emp where ename = 'ALLEN';
+
+-- insert into emp (empno, ename) values (1004, '오쌤');
+
+-- 급여등급이 5인 사원들의 레코드를 삭제
+delete from emp
+where sal >= (select losal from salgrade where grade = 5)
+    and sal <= (select hisal from salgrade where grade = 5);
+
+rollback;
+select * from emp;
+
+select e.empno
+from emp e join salgrade s
+    on e.sal between s.losal and s.hisal
+where s.grade = 5;
+
+delete from emp
+where empno in (
+    select e.empno
+    from emp e join salgrade s
+        on e.sal between s.losal and s.hisal
+    where s.grade = 5
+);
+
+select * from emp;
+
+commit;
