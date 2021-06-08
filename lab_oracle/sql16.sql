@@ -102,23 +102,51 @@ alter table ex_users modify user_pw varchar2(100);
 create table test_emp as
 select * from emp;
 
+-- 데이터 복사 없이 같은 모양의 테이블을 생성
+--create table test_emp 
+--as select * from emp where empno = -1;
+
+-- 테이블이 생성된 경우에 테이블 내용 복사
+--insert into table_name 
+--select * from emp;
+
+desc test_emp;
+
 -- test_emp 테이블에서
 -- 2. etc 컬럼 추가. 20 byte 문자열.
+alter table test_emp
+add etc varchar2(20);
+
+desc test_emp;
 
 -- 3. etc 컬럼을 remark 이름으로 변경.
+alter table test_emp
+rename column etc to remark;
 
 -- 4. remark 컬럼의 데이터 타입을 100 byte 문자열로 변경.
+alter table test_emp
+modify remark varchar2(100);
 
 -- 5. empno 컬럼에 primary key 제약조건 추가.
+alter table test_emp
+add constraint pk_test_emp primary key (empno);
 
-
--- 6. dept 테이블의 deptno에 고유키 제약조건을 추가한 후, 
+-- 6. dept 테이블의 deptno 컬럼에 고유키 제약조건을 추가한 후, 
 -- deptno 컬럼이 dept 테이블의 deptno를 참조하도록 외래키 제약 조건 추가
--- delete from test_emp where empno = 1004;
+alter table dept
+modify deptno primary key;
+
+delete from test_emp where empno = 1004;
+
+alter table test_emp
+add constraint fk_test_emp foreign key (deptno) references dept (deptno);
 
 -- 7. ename 컬럼에 not null 제약조건 추가
+alter table test_emp 
+modify ename constraint nn_test_emp_ename not null;
 
 -- 8. 7에서 만든 제약조건 삭제
+alter table test_emp drop constraint nn_test_emp_ename;
 
 -- 9. comm 컬럼 삭제
 
