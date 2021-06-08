@@ -49,21 +49,60 @@ select * from emp;
 
 
 -- 평균 급여보다 적은 급여를 받는 직원들의 급여를 10% 인상
+update emp
+set sal = sal * 1.1
+where sal < (select avg(sal) from emp);
 
 -- 매니저가 KING인 직원들의 수당을 100으로 업데이트
+update emp
+set comm = 100
+where mgr = (select empno from emp where ename = 'KING');
 
 -- RESEARCH 부서에서 근무하는 직원들의 수당으로 50으로 업데이트
+update emp
+set comm = 50
+where deptno = (select deptno from dept where dname = 'RESEARCH');
 
 -- SCOTT의 급여를 KING의 급여와 동일하게 업데이트
+update emp
+set sal = (select sal from emp where ename = 'KING')
+where ename = 'SCOTT';
 
 -- 직책이 SALESMAN인 직원들의 급여를 ALLEN의 급여와 동일하게 업데이트
+update emp
+set sal = (select sal from emp where ename = 'ALLEN')
+where job = 'SALESMAN';
 
 -- MILLER의 급여와 수당을 SMITH와 동일하게 업데이트
+update emp
+set sal = (select sal from emp where ename = 'SMITH'), 
+    comm = (select comm from emp where ename = 'SMITH')
+where ename = 'MILLER';
+
+update emp
+set (sal, comm) = (select sal, comm from emp where ename = 'SMITH')
+where ename = 'MILLER';
 
 -- comm이 NULL인 직원들의 comm을 -1로 업데이트
+update emp
+set comm = -1
+where comm is null;
+
+update emp set comm = null where comm = -1;
+
+update emp set comm = nvl(comm, -1);
 
 -- 10번 부서에서 입사일이 가장 늦은 직원보다 더 늦게 입사한 직원의
 -- 부서 번호를 30번으로 업데이트
+update emp
+set deptno = 30
+where hiredate > (select max(hiredate) from emp where deptno = 10);
 
 -- 10번 부서의 가장 늦은 입사일보다 더 늦게 입사한 직원의 
--- 부서를 OPERATION 부서로 업데이트
+-- 부서를 OPERATIONS 부서로 업데이트
+update emp
+set deptno = (select deptno from dept where dname = 'OPERATIONS')
+where hiredate > (select max(hiredate) from emp where deptno = 10);
+
+-- 위의 작업 내용을 데이터베이스 영구히 저장.
+commit;
