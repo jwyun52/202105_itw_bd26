@@ -89,3 +89,14 @@ countdown
 # 범위 연산자(:)
 numbers <- 1:10  # seq(from = 1, to = 10)
 numbers
+
+
+# vector와 vector의 연산:
+# 같은 위치(인덱스)에 있는 원소들끼리 연산을 수행.
+numbers1 <- c(1, 10, 100)
+numbers2 <- c(2, 4, 6)
+numbers1 + numbers2
+
+# vector와 scalar의 연산:
+# vector의 모든 원소에 연산이 수행됨.
+numbers1 + 2
