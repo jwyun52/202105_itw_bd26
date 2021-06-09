@@ -28,3 +28,28 @@ file_path
 # CSV 파일을 읽어서 데이터프레임 생성하기
 df <- read.csv(file = 'exam_scores2.csv')
 df
+
+# ./datasets/csv_exam.csv 파일을 읽어서 exam1 데이터프레임 생성
+exam1 <- read.csv(file = 'datasets/csv_exam.csv')
+exam1
+
+emp <- read.csv(file = '../lab_oracle/EMP.csv',
+                header = FALSE,
+                col.names = c('empno', 'ename', 'job', 'mgr', 
+                              'hiredate', 'sal', 'comm', 'deptno'))
+# header 파라미터: 
+#   csv 파일에 헤더 정보(컬럼 이름)가 포함되어 있는 지 여부를 설정.
+#   header의 기본값은 TRUE(파일의 첫번째 라인을 컬럼 이름으로 사용)
+#   header = FALSE: 파일의 첫번째 라인부터 데이터로 취급.
+# col.names 파라미터: 데이터프레임의 컬럼 이름을 vector로 만들어줌.
+emp
+
+
+# 엑셀 파일(xls, xlsx)을 읽고 쓰기 위해서는 별도의 패키지를 설치해야 함.
+# install.packages('패키지이름')
+# R Studio 메뉴 -> Tools -> Install Packages... -> 패키지 이름 입력 -> Install 클릭
+
+install.packages('tidyverse')
+
+# 설치된 패키지 확인
+installed.packages()
