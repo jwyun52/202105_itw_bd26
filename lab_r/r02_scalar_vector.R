@@ -19,6 +19,7 @@ is_same <- (3 == 5)
 # c(): combine 함수
 # 함수(function): 기능
 #   argument(인수): 함수를 호출할 때 함수에게 전달하는 값.
+#   parameter(매개변수, 인자): argument들을 저장하기 위해서 선언하는 변수.
 #   return value(반환 값): 함수가 기능을 수행한 후 그 결과로 반환하는 값.
 
 numbers <- c(1, 2, 3, 10, 20, 100)
@@ -51,3 +52,40 @@ numbers[-1]
 # numbers[2:6]
 # numbers에서 인덱스 1, 2을 제외하고 나머지 모든 원소를 선택
 numbers[c(-1, -2)]
+numbers[-c(1, 2)]
+
+
+# seq(): sequence 함수
+# 함수 호출 방법 1: 파라미터 이름들을 생략하고, argument들만 전달.
+evens <- seq(2, 10, 2)  # 2부터 10까지 2씩 증가하는 수열
+evens
+
+# 함수 호출 방법 2: 어떤 파라미터에 어떤 값(argument)를 전달할 지정.
+odds <- seq(from = 1, to = 9, by = 2)
+odds
+
+# 파라미터와 argument를 모두 기술하는 경우에는,
+# argument의 전달 순서가 중요하지 않음.
+odds2 <- seq(by = 2, from = 11, to = 20)
+odds2
+
+# 함수들 중에는 parameter의 기본값이 미리 설정되어 있는 경우가 있음.
+# optional parameter: 기본값이 설정된 파라미터.
+# optional parameter에 argument를 전달하면, 
+# 기본값이 무시되고 전달된 argument를 사용.
+# optional parameter에 argument를 전달하지 않으면,
+# 기본값이 사용됨.
+
+# seq() 함수에서 from 파라미터의 기본값은 1. by 파라미터의 기본값은 1.
+numbers <- seq(from = 2, to = 10)
+numbers
+numbers <- seq(to = 10)
+numbers
+
+# 10부터 1까지 1씩 감소하는 수열
+countdown <- seq(from = 10, to = 1, by = -1)
+countdown
+
+# 범위 연산자(:)
+numbers <- 1:10  # seq(from = 1, to = 10)
+numbers
