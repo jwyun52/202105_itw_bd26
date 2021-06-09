@@ -21,3 +21,25 @@ exam_scores <- data.frame(korean = c(90, 100, 80),
                           math = c(10, 20, 30))
 exam_scores
 
+# 파생변수: 데이터프레임이 가지고 있는 변수들을 사용해서 새로운 컬럼을 추가하는 것.
+# exam_scores 데이터프레임에 세과목 합계를 파생변수로 추가
+exam_scores$total <- 
+  exam_scores$korean + exam_scores$english + exam_scores$math
+
+exam_scores
+
+# exam_scores 데이터프레임에 세과목 평균을 파생변수로 추가
+exam_scores$average <- exam_scores$total / 3
+
+exam_scores
+
+# Ctrl+Shift+C: 주석(comment) 토글
+# Ctrl+Space: 코드 자동완성 도와주기
+
+# 데이터프레임의 내용을 파일(csv)로 저장하기
+write.csv(x = exam_scores,           # 파일에 write할 객체(데이터프레임)
+          file = 'exam_scores.csv')  # 파일 이름(경로)
+
+write.csv(x = exam_scores,
+          file = 'exam_scores2.csv',
+          row.names = FALSE)  # 행 번호(이름)을 파일에 쓰지 않음.
