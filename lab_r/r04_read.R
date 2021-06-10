@@ -53,3 +53,24 @@ install.packages('tidyverse')
 
 # 설치된 패키지 확인
 installed.packages()
+
+
+# 설치한 패키지를 사용하기 위해서 패키지를 메모리에 로드.
+library(readxl)  # 엑셀 파일을 읽기 위한 패키지인 readxl을 사용함.
+
+search()  # 메모리에 로드된 패키지 이름 확인
+
+exam2 <- read_xlsx(path = 'datasets/excel_exam.xlsx')
+exam2
+
+# 엑셀 파일의 테이블에 컬럼 이름이 없는 경우:
+exam3 <- read_xlsx(path = 'datasets/excel_exam_novar.xlsx',
+                   col_names = c('id', 'class', 'english', 'math', 'science'))
+exam3
+# 컬럼 이름 아래 <dbl>: double(실수, 소숫점을 포함하는 숫자.)
+
+# 엑셀 파일의 특정 sheet에 있는 테이블을 읽을 때:
+exam4 <- read_xlsx(path = 'datasets/excel_exam_sheet.xlsx',
+                   sheet = 3)
+# sheet = 엑셀 시트의 이름(문자열) 또는 시트의 위치(정수)
+exam4
