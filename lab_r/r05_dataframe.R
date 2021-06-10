@@ -34,4 +34,4 @@ summary(exam$math)
 # Mean: 평균
 # Median: 중앙값
 # 1st Qu.: first Quartile, 1사분위값
-# 3rd Qu.: third Quratile, 3사분위값
+# 3rd Qu.: third Quartile, 3사분위값
