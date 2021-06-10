@@ -29,3 +29,22 @@ summary(mpg$cty)
 # (일정한) 구간으로 나눠서, 그 구간 안에 포함된 데이터의 개수를
 # 막대로 표시한 그래프.
 qplot(x = cty, data = mpg, bins = 8)
+#> bins = 막대의 개수
+
+# box plot(상자 그림)
+qplot(y = cty, data = mpg, geom = 'boxplot')
+#> geom = 그래프 종류
+
+qplot(x = cty, data = mpg, geom = 'boxplot')
+
+# 고속도로 연비(mpg$hwy)
+# summary
+summary(mpg$hwy)
+# histogram
+qplot(x = hwy, data = mpg, bins = 10)
+# boxplot
+qplot(x = hwy, data = mpg, geom = 'boxplot')
+
+
+# 범주형(category type) 변수 시각화
+
