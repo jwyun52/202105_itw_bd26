@@ -46,5 +46,30 @@ qplot(x = hwy, data = mpg, bins = 10)
 qplot(x = hwy, data = mpg, geom = 'boxplot')
 
 
-# 범주형(category type) 변수 시각화
+# 범주형(category type) 변수 시각화 - 카테고리별 빈도수(개수)
+table(mpg$manufacturer)
+# 막대 그래프
+qplot(x = manufacturer, data = mpg)
 
+# 자동차 구동방식(mpg$drv)
+# 도수분포표
+table(mpg$drv)
+# 막대그래프
+qplot(x = drv, data = mpg)  # 세로 막대 그래프
+qplot(y = drv, data = mpg, geom = 'bar')  # 가로 막대 그래프
+
+
+# 두 변수의 상관 관계 시각화
+# 배기량(displ)과 시내주행 연비(cty) 사이의 관계
+qplot(x = displ, y = cty, data = mpg)  # cty ~ displ 산점도 그래프
+
+# 고속도로연비(hwy) ~ 배기량(displ) scatter plot
+qplot(x = displ, y = hwy, data = mpg)
+
+# hwy ~ cyl(실린더 개수) scatter plot
+qplot(x = cyl, y = hwy, data = mpg)
+
+table(mpg$cyl)
+
+# hwy ~ displ 관계에서 cyl를 점의 색깔.
+qplot(x = displ, y = hwy, data = mpg, color = as.factor(cyl))
