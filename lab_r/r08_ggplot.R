@@ -41,3 +41,37 @@ g + geom_boxplot(mapping = aes(x = cty))
 # 고속도로 연비 요약 & box plot
 summary(mpg$hwy)
 g + geom_boxplot(mapping = aes(y = hwy))
+
+# 자동차 구동방식별 시내주행 연비의 분포를 box plot으로 시각화
+table(mpg$drv)
+g + geom_boxplot(mapping = aes(x = drv, y = cty))
+
+# scatter plot과 비교
+g + geom_point(mapping = aes(x = drv, y = cty))
+
+# 실린더 개수별 시내주행 연비 분포 시각화 - boxplot
+table(mpg$cyl)
+g + geom_boxplot(mapping = aes(x = as.factor(cyl), y = cty))
+#> as.factor(변수): 변수를 factor(카테고리 타입 객체)로 변환.
+
+# scatter plot과 비교
+g + geom_point(mapping = aes(x = cyl, y = cty))
+g + geom_point(mapping = aes(x = as.factor(cyl), y = cty))
+
+
+# scatter plot(산점도 그래프): 두 변수 간의 상관관계를 시각화
+# cty ~ displ 상관관계
+g + geom_point(mapping = aes(x = displ, y = cty))
+
+# hwy ~ cty 상관관계
+g + geom_point(mapping = aes(x = cty, y = hwy))
+
+
+# 하나의 ggplot 객체에 두개 이상의 geom 함수를 사용.
+ggplot(data = mpg, mapping = aes(x = displ, y = cty)) + 
+  geom_point() +
+  geom_smooth()
+
+
+
+
