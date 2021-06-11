@@ -155,7 +155,7 @@ ggplot(data = economics) +
   geom_line(mapping = aes(x = date, y = psavert))
 
 # economics 데이터 프레임에 인구대비 실업자 비율(unemprt) 파생변수 추가.
-economics$unemprt = (economics$unemploy / economics$pop) * 100
+economics$unemprt <- (economics$unemploy / economics$pop) * 100
 tail(economics)
 
 # 실업자 비율 시계열 그래프
