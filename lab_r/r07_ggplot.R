@@ -61,6 +61,7 @@ ggplot(data = mpg) +
   ylab('고속도로 연비(mile/gallon)')
 
 
-
-
-
+# ggplot 객체들은 변수에 저장할 수 있음.
+g <- ggplot(data = mpg)
+g + geom_point(mapping = aes(x = displ, y = cty))
+g + geom_point(mapping = aes(x = cyl, y = cty))
