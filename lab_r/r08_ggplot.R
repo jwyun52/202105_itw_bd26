@@ -31,4 +31,4 @@ g + geom_bar(mapping = aes(x = drv, fill = drv))
 #   최솟값, 1사분위값, 중앙값(median), 3사분위값, 최댓값
 # 시내주행 연비 요약 & box plot
 
-# 고속도리 연비 요약 & box plot
+# 고속도로 연비 요약 & box plot
