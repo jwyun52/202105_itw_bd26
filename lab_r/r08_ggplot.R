@@ -21,6 +21,10 @@ g + geom_bar(mapping = aes(y = class))  # 가로 막대 그래프
 # 자동차 연료(fl)별 데이터 개수
 table(mpg$fl)
 g + geom_bar(mapping = aes(x = fl, fill = fl))
+#> 막대 채우기 색깔을 fl의 값에 따라서 다르게 매핑함.
+
+g + geom_bar(mapping = aes(x = fl), fill = 'lightblue')
+#> 모든 막대의 채우기 색깔을 'ligthblue' 한가지로 설정.
 
 # 자동차 구동방식(drv)별 데이터 개수
 table(mpg$drv)
@@ -30,5 +34,10 @@ g + geom_bar(mapping = aes(x = drv, fill = drv))
 # box plot(상자 그림): 연속형 변수의 기술 통계량 시각화
 #   최솟값, 1사분위값, 중앙값(median), 3사분위값, 최댓값
 # 시내주행 연비 요약 & box plot
+summary(mpg$cty)
+g + geom_boxplot(mapping = aes(y = cty))
+g + geom_boxplot(mapping = aes(x = cty))
 
 # 고속도로 연비 요약 & box plot
+summary(mpg$hwy)
+g + geom_boxplot(mapping = aes(y = hwy))
