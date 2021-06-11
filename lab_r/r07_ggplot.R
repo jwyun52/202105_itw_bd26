@@ -42,3 +42,25 @@ ggplot(data = mpg, mapping = aes(x = displ, y = cty)) +
 
 ggplot(data = mpg, mapping = aes(x = displ, y = cty)) +
   geom_point(mapping = aes(color = 'blue'))
+
+# hwy ~ displ 관계 scatter plot
+# drv의 값에 따라서 점의 색깔을 다르게 설정.
+# class(차의 크기에 따른 분류)의 값에 따라서 점의 모양을 다르게 설정.
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, 
+                           color = drv, shape = class))
+
+table(mpg$class)
+
+
+# ggplot2의 여러가지 옵션들
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  ggtitle('배기량 vs 연비') +  # 그래프 제목
+  xlab('배기량(L)') +  # x축 레이블(label)
+  ylab('고속도로 연비(mile/gallon)')
+
+
+
+
+
