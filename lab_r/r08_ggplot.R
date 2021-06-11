@@ -142,5 +142,30 @@ str(economics)
 head(economics)
 tail(economics)
 
+# 인구수(pop) 시계열 그래프
+ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = pop))
+
+# 실업자수(unemploy) 시계열 그래프
+ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = unemploy))
+
+# 개인저축률(psavert) 시계열 그래프
+ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = psavert))
+
+# economics 데이터 프레임에 인구대비 실업자 비율(unemprt) 파생변수 추가.
+economics$unemprt = (economics$unemploy / economics$pop) * 100
+tail(economics)
+
+# 실업자 비율 시계열 그래프
+ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = unemprt))
+
+# 개인저축률, 실업자 비율 시계열 그래프를 함께
+ggplot(data = economics, mapping = aes(x = date)) +
+  geom_line(mapping = aes(y = psavert, color = '저축률')) +
+  geom_line(mapping = aes(y = unemprt, color = '실업률')) +
+  ylab('Ratio')
 
 
