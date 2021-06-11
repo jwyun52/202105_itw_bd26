@@ -70,8 +70,48 @@ g + geom_point(mapping = aes(x = cty, y = hwy))
 # 하나의 ggplot 객체에 두개 이상의 geom 함수를 사용.
 ggplot(data = mpg, mapping = aes(x = displ, y = cty)) + 
   geom_point() +
+  geom_smooth()  # 회귀 곡선(regression curve)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = cty)) +
+  geom_point(mapping = aes(color = drv)) +
   geom_smooth()
 
+ggplot(data = mpg, mapping = aes(x = displ, y = cty)) +
+  geom_point(mapping = aes(color = drv)) +
+  geom_smooth(mapping = aes(color = drv))
 
+ggplot(data = mpg, mapping = aes(x = displ, y = cty, color = drv)) +
+  geom_point() +
+  geom_smooth()
+
+# hwy ~ displ scatter plot + 회귀 곡선
+# 1) 점의 색깔은 drv에 따라서 다르게 매핑.
+# 회귀 곡선의 색깔도 drv에 따라서 다르게 매핑.
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth()
+
+# 2) 점의 색깔은 drv에 따라서 다르게 매핑.
+# 회귀 곡선의 선 스타일이 drv에 따라서 다르게 매핑. 선 색깔은 한가지.
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(color = drv)) +
+  geom_smooth(mapping = aes(linetype = drv))
+
+# 3) 점의 색깔, 회귀 곡선의 색깔, 회귀 곡선의 선 스타일 모두 
+# drv 값에 따라서 다르게 매핑
+ggplot(data = mpg, 
+       mapping = aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(mapping = aes(linetype = drv))
+
+
+# 막대 그래프: 카테고리 변수의 (데이터 개수) 시각화
+# 자동차 구동방식별 빈도수
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = drv))
+
+# 자동차 class별, drv별 빈도수
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = drv))
 
 
