@@ -112,6 +112,35 @@ ggplot(data = mpg) +
 
 # 자동차 class별, drv별 빈도수
 ggplot(data = mpg) +
-  geom_bar(mapping = aes(x = class, fill = drv))
+  geom_bar(mapping = aes(x = class, fill = drv), 
+           position = 'dodge')
+#> geom_bar() 함수의 position 파라미터:
+#   (1) position = 'stack': 막대를 쌓아서 그림.
+#     position의 파라미터의 기본값은 'stack'이므로, 생략가능.
+#   (2) position = 'dodge': 막대들을 옆으로 나란히 그림.
+#   (3) position = 'identity': 막대들을 겹쳐서 그림.
+#     identity를 사용하면 뒤에 가려져서 보이지 않는 막대들이 생길 수 있음.
+#     -> 막대를 약간 투명하게 만들면 가려진 막대들이 보임.
+
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = drv), 
+           position = 'identity', alpha = 0.4)
+#> alpha = 불투명도(0 ~ 1). 0은 투명. 1은 불투명.
+
+# geom_bar() 함수의 position = 'fill':
+# 그룹들 간의 비율을 막대로 표시. 모든 막대는 동일한 길이.
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, fill = drv), 
+           position = 'fill')
+
+# line graph(선 그래프): 시계열(time-series) 데이터 시각화.
+# 시계열 데이터: 시간에 따라서 값들이 변하는 데이터.
+#   주식, 비트코인, 환율, 인구수, 감염자수, 날씨, ...
+
+# ggplot2 패키지의 economics 예제 데이터 셋 사용.
+str(economics)
+head(economics)
+tail(economics)
+
 
 
