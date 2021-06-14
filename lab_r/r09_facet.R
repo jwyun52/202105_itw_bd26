@@ -34,3 +34,21 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_grid(facets = cyl ~ drv)
 
+# drv별 hwy의 box plot
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = drv, y = hwy))
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = hwy, y = drv))
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(y = hwy)) +
+  facet_grid(facets = . ~ drv)
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(y = hwy)) +
+  facet_grid(facets = drv ~ .)
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = hwy)) +
+  facet_grid(facets = drv ~ .)
