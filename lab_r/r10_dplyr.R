@@ -148,4 +148,22 @@ mean(exam$math)  # 평균(mean)
 sd(exam$math)  # 표준 편차(standard deviation)
 median(exam$math)  # 중앙값(median)
 
-summarise(exam, mean(math), sd(math))
+summarise(exam, mean_math = mean(math), sd_math = sd(math))
+
+# 변수(객체) <- 값
+# 함수(파라미터 = 값)
+
+exam %>% 
+  summarise(mean_math = mean(math), sd_math = sd(math))
+
+# 1반 학생들의 과학 점수 평균과 표준편차
+exam %>% 
+  filter(class == 1) %>% 
+  summarise(mean_sci = mean(science), sd_sci = sd(science))
+
+class_1 <- filter(exam, class == 1)
+class_1
+mean(class_1$science)
+sd(class_1$science)
+
+summarise(class_1, mean(science), sd(science))
