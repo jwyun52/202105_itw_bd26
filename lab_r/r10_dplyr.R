@@ -38,3 +38,21 @@ select(exam, -class)
 exam %>% select(id, math)
 exam %>% select(-class)
 
+
+# filter() 함수
+# exam 데이터 프레임에서 class가 1인 observation 출력
+# 비교 연산자: ==, !=, >, >=, <, <=
+# 논리 연산자(and, or, not): &, |, !
+filter(exam, class == 1)
+exam %>% filter(class == 1)
+
+# exam 데이터 프레임에서 class가 1또는 2인 observation 출력
+filter(exam, class == 1 | class == 2)
+exam %>% filter(class == 1 | class == 2)
+
+# 변수이름 %in% 벡터
+filter(exam, class %in% c(1, 2))
+
+# 1반 학생 중에서 수학 점수가 50점 이상인 학생들의 정보
+filter(exam, class == 1 & math >= 50)
+exam %>% filter(class == 1 & math >= 50)
