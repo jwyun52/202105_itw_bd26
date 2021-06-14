@@ -57,3 +57,20 @@ ifelse(numbers > 0, '양수', '양수아님')
 ifelse(numbers > 0, 'positive', 
        ifelse(numbers == 0, 'zero', 'negative'))
 
+
+# csv_exam.csv 파일을 읽고 데이터 프레임을 생성
+# 파생변수 average 추가 - 세과목 평균
+# 파생변수 grade를 추가
+#   grade = 'A', if 세과목 평균 >= 80
+#   grade = 'B', if 세과목 평균 >= 60
+#   grade = 'C', if 세과목 평균 < 60
+
+# mpg 데이터 프레임에서
+# 파생변수 mean_mpg(시내 연비와 고속도로 연비의 평균) 추가
+# 파생변수 grade_mpg 추가
+#   grade_mpg = 'A', if mean_mpg >= 30
+#   grade_mpg = 'B', if mean_mpg >= 20
+#   grade_mpg = 'C', if mean_mpg >= 10
+#   grade_mpg = 'D', if mean_mpg < 10
+# manufacturer, model, cty, hwy, mean_mpg, grade_mpg를 출력
+# mean_mpg 내림차순 정렬
