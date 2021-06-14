@@ -56,3 +56,96 @@ filter(exam, class %in% c(1, 2))
 # 1반 학생 중에서 수학 점수가 50점 이상인 학생들의 정보
 filter(exam, class == 1 & math >= 50)
 exam %>% filter(class == 1 & math >= 50)
+
+# 수학 점수가 평균 이상인 학생들의 id, 수학점수
+mean(exam$math)  # 수학 점수 평균
+subset <- filter(exam, math >= mean(math))  
+#> 수학 점수가 평균 이상인 학생들만 갖는 데이터 프레임
+select(subset, id, math)
+
+exam %>%  # exam 데이터 프레임에서
+  filter(math >= mean(math)) %>%  # 수학 점수가 평균 이상인 학생들.
+  select(id, math)  # id, math 변수를 선택.
+
+exam %>%  # exam 데이터 프레임에서
+  select(id, math) %>%  # id, math 변수를 선택
+  filter(math >= mean(math))  # 수학 점수가 평균 이상인 학생들.
+
+# 수학점수가 평균 이상인 학생들의 id, science
+exam %>% 
+  filter(math >= mean(math)) %>% 
+  select(id, science)
+
+# exam %>% 
+#   select(id, science) %>% 
+#   filter(math >= mean(math))
+#> 에러 발생
+
+
+# arrange() 함수
+# exam 데이터 프레임을 수학점수 오름차순으로 출력
+arrange(exam, math)
+exam %>% arrange(math)
+
+# 수학점수 내림차순 정렬
+arrange(exam, desc(math))  # desc(math) 대신에 -math를 사용해도 됨.
+exam %>% arrange(desc(math))
+
+# 수학점수 상위 5명 출력
+head(exam, n = 5)
+exam %>% head(n = 5)
+exam %>%              # exam 데이터 프레임에서
+  arrange(-math) %>%  # 수학 점수 내림차순 정렬
+  head(n = 5)         # 위에서 5개 행 선택
+
+head(arrange(exam, -math), n = 5)
+
+# 수학 점수 하위 5명 출력
+exam %>%              # exam 데이터 프레임에서
+  arrange(-math) %>%  # 수학 점수 내림차순 정렬
+  tail(n = 5)         # 아래에서 5개 행 선택
+exam %>% arrange(math) %>% head(n = 5)
+
+
+# 1반 학생들 중에서 수학점수 상위 2명의 id, math, science를 출력
+exam %>%                  # exam 데이터 프레임에서
+  filter(class == 1) %>%  # class가 1인 학생들
+  arrange(-math) %>%      # 수학점수 내림차순 정렬
+  head(n = 2) %>%         # 상위 2명
+  select(id, math, science)  # id, math, science 컬럼 선택
+
+# 1, 2반 학생들 중에서 수학 점수 상위 4명의 id, class, math, science 출력
+exam %>% 
+  filter(class == 1 | class == 2) %>%   # class %in% c(1, 2)
+  arrange(-math) %>% 
+  head(n = 4) %>% 
+  select(-english)  # select(id, class, math, science)
+
+
+# mutate() 함수
+mutate(exam, total = math + english + science)
+#> mutate() 함수는 원본 데이터 프레임 exam을 수정하는 것이 아니라,
+# 파생변수가 추가된 새로운 데이터 프레임을 만들어서 리턴함.
+
+# 비교
+exam$total <- exam$math + exam$english + exam$science
+#> exam 데이터 프레임에 total 변수가 추가됨.
+
+exam <- read.csv(file = 'datasets/csv_exam.csv')
+# exam 데이터 프레임에 세과목 총점(total), 세과목 평균(average) 파생변수 추가
+mutate(exam, 
+       total = math + english + science,
+       average = total / 3)
+
+
+# summarise() 함수
+# 비교
+summary(exam)
+summary(exam$math)
+
+# exam 데이터 프레임에서 math의 평균, 표준편차 계산
+mean(exam$math)  # 평균(mean)
+sd(exam$math)  # 표준 편차(standard deviation)
+median(exam$math)  # 중앙값(median)
+
+summarise(exam, mean(math), sd(math))
