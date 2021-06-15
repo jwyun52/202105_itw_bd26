@@ -97,3 +97,30 @@ df
 ggplot(df) +
   geom_col(mapping = aes(x = class, y = mean_cty))
 
+# 자동차 제조사별 고속도로 연비 평균이 높은 순위 1 ~ 5위 출력, 시각화
+df <- mpg %>%  # mpg 데이터 프레임
+  group_by(manufacturer) %>%  # 제조사별로 그룹 지어서 
+  summarise(mean_hwy = mean(hwy)) %>%  # 제조사별 고속도로 연비 평균 계산
+  arrange(-mean_hwy) %>%  # 연비 평균 내림차순으로 정렬
+  head(n = 5)  # 상위 5개 선택
+df
+ggplot(data = df) +
+  geom_col(mapping = aes(x = manufacturer, y = mean_hwy))
+
+ggplot(data = df) +
+  geom_col(mapping = aes(x = reorder(manufacturer, -mean_hwy), 
+                         y = mean_hwy)) +
+  xlab('manufacturer')
+
+# 자동차 회사별 compact 자동차 모델 수
+mpg %>% 
+  group_by(manufacturer) %>% 
+  filter(class == 'compact') %>% 
+  count()  # summarise(n = n())
+
+mpg %>% 
+  filter(class == 'compact') %>% 
+  count(manufacturer)
+
+
+
