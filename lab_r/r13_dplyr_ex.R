@@ -7,3 +7,11 @@
 # 4) '인구 대비 아시아계 인구 백분율' 파생 변수를 추가하고, 상위 10개 지역의
 # state, county, 아시아계 인구 비율을 출력.
 #> midwest에는 이미 percasian 변수가 있습니다. 그 값과 비교해보세요.
+
+library(tidyverse)
+search()
+
+# 데이터 프레임 확인
+head(midwest)
+View(midwest)
+str(midwest)
