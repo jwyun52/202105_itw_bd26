@@ -122,5 +122,35 @@ mpg %>%
   filter(class == 'compact') %>% 
   count(manufacturer)
 
+# 비교:
+mean(mpg$hwy)
+mpg %>%  # mpg 데이터 프레임에서
+  filter(hwy >= mean(hwy)) %>%  # 고속도로 연비가 평균(23.4) 이상인
+  group_by(class) %>%  # class별로 그룹 지어서
+  count()  # 각 그룹별 개수
+
+mpg %>% 
+  group_by(class) %>%  # class별로 그룹 지어서
+  filter(hwy >= mean(hwy)) %>%  # 그룹 안에서 그룹 평균 이상인
+  count()  # 그룹별 개수
+
+# 'suv' 자동차의 통합 연비((시내 + 고속도로)/2)을 구하고,
+# 회사별 통합 연비 평균의 내림차순으로 정렬해서 1~3위 출력
+df <- mpg %>% 
+  filter(class == 'suv') %>%  # 'suv'만 선택
+  mutate(total_mpg = (cty + hwy) / 2) %>%  # 통합연비 파생변수 추가
+  group_by(manufacturer) %>%  # 회사별로 그룹
+  summarise(mean_tot_mpg = mean(total_mpg)) %>%  # 회사별 통합연비 평균
+  arrange(-mean_tot_mpg) %>%  # 내림차순 정렬
+  head(n = 3)  # 1~3위 선택
+
+df
+
+ggplot(data = df) +
+  geom_col(mapping = aes(x = reorder(manufacturer, -mean_tot_mpg), 
+                         y = mean_tot_mpg)) +
+  xlab('manufacturer') +
+  ggtitle('회사별 통합 연비') +
+  theme(plot.title = element_text(hjust = 0.5))
 
 
