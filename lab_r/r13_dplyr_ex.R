@@ -15,3 +15,29 @@ search()
 head(midwest)
 View(midwest)
 str(midwest)
+
+# 1) 미성년 인구 비율(% 단위) 파생변수 추가
+midwest_df <- midwest %>% 
+  mutate(child_pct = ((poptotal - popadults) / poptotal) * 100)
+
+# 2) 미성년 인구 비율이 높은 상위 5개 county와 비율
+midwest_df %>% 
+  arrange(-child_pct) %>% 
+  head(n = 5) %>% 
+  select(county, child_pct)
+
+# 3) 미성년 인구 비율 등급(large, middle, small)
+midwest_df <- midwest_df %>% 
+  mutate(child_pct_grade = ifelse(child_pct >= 40, 'large',
+                                  ifelse(child_pct >= 30, 'middle', 'small')))
+
+# 미성년 인구 비율 등급 빈도수
+table(midwest_df$child_pct_grade)
+count(midwest_df, child_pct_grade)
+
+# 4) 아시아계 인구 비율 상위 10개 county
+midwest_df %>% 
+  mutate(asia_pct = (popasian / poptotal) * 100) %>% 
+  arrange(-asia_pct) %>% 
+  head(n = 10) %>% 
+  select(state, county, asia_pct, percasian)
