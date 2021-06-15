@@ -13,6 +13,9 @@
 
 library(tidyverse)
 
+install.packages('ggthemes')  # ggplot 테마들을 가지고 있는 패키지
+library(ggthemes)
+
 exam <- read.csv(file = 'datasets/csv_exam.csv')
 head(exam)
 
@@ -151,6 +154,9 @@ ggplot(data = df) +
                          y = mean_tot_mpg)) +
   xlab('manufacturer') +
   ggtitle('회사별 통합 연비') +
+  theme_economist() +
   theme(plot.title = element_text(hjust = 0.5))
 
-
+ggplot(data = df) +
+  geom_col(mapping = aes(x = mean_tot_mpg,
+                         y = reorder(manufacturer, mean_tot_mpg)))
