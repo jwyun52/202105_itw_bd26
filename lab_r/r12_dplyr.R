@@ -51,7 +51,49 @@ count(exam, class)
 
 # exam 데이터 프레임에서 
 # class별 영어 점수의 평균, 표준편차, 최댓값, 최솟값 출력
-exam %>% 
+df <- exam %>% 
   group_by(class) %>% 
   summarise(mean = mean(english), sd = sd(english),
             max = max(english), min = min(english))
+df
+
+# 반별 영어 점수 평균 시각화 -> 막대 그래프
+# geom_col(): 데이터 프레임에서 변수 2개를 x축과 y축에 mapping시킨 막대 그래프.
+ggplot(data = df) +
+  geom_col(mapping = aes(x = class, y = mean))
+
+# 반별 인원수 -> 막대 그래프
+# geom_bar(): 데이터 프레임에서 카테고리 변수의 빈도수 막대 그래프.
+exam %>% count(class)
+
+ggplot(data = exam) +
+  geom_bar(mapping = aes(x = class))
+
+# dplyr 패키지를 사용해서 가공된 데이터를 파이프 연산자( %>% )를 사용해서
+# ggplot() 함수에게 전달할 수 있음.
+exam %>%  # exam 데이터 프레임에서
+  group_by(class) %>%  # class별로 그룹 지어서
+  summarise(mean_eng = mean(english)) %>%  # class별 영어 점수 평균 계산
+  ggplot() +
+  geom_col(mapping = aes(x = class, y = mean_eng))
+
+
+# ggplot2::mpg 데이터 프레임 사용
+head(mpg)
+
+# 자동차 class별 자동차 수 계산, 시각화(막대 그래프)
+table(mpg$class)  #> 분할표, 도수분포표
+count(mpg, class)  #> 데이터 프레임
+
+ggplot(mpg) +
+  geom_bar(mapping = aes(x = class))
+
+# 자동차 class별 시내 연비의 평균 계산, 시각화(막대 그래프)
+df <- mpg %>% 
+  group_by(class) %>% 
+  summarise(mean_cty = mean(cty))
+df
+
+ggplot(df) +
+  geom_col(mapping = aes(x = class, y = mean_cty))
+
