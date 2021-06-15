@@ -64,6 +64,12 @@ ifelse(numbers > 0, 'positive',
 #   grade = 'A', if 세과목 평균 >= 80
 #   grade = 'B', if 세과목 평균 >= 60
 #   grade = 'C', if 세과목 평균 < 60
+exam <- read.csv(file = 'datasets/csv_exam.csv')
+head(exam)
+exam %>% 
+  mutate(average = (math + english + science) / 3,
+         grade = ifelse(average >= 80, 'A', 
+                        ifelse(average >= 60, 'B', 'C')))
 
 # mpg 데이터 프레임에서
 # 파생변수 mean_mpg(시내 연비와 고속도로 연비의 평균) 추가
@@ -74,3 +80,12 @@ ifelse(numbers > 0, 'positive',
 #   grade_mpg = 'D', if mean_mpg < 10
 # manufacturer, model, cty, hwy, mean_mpg, grade_mpg를 출력
 # mean_mpg 내림차순 정렬
+head(mpg)
+
+mpg %>% 
+  mutate(mean_mpg = (cty + hwy) / 2) %>% 
+  mutate(grade_mpg = ifelse(mean_mpg >= 30, 'A',
+                            ifelse(mean_mpg >= 20, 'B',
+                                   ifelse(mean_mpg >= 10, 'C', 'D')))) %>% 
+  select(manufacturer, model, cty, hwy, mean_mpg, grade_mpg) %>% 
+  arrange(-mean_mpg)
