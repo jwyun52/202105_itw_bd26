@@ -94,3 +94,59 @@ ggplot(data = welfare) +
 ggplot(data = welfare) +
   geom_histogram(mapping = aes(x = income))
 
+
+# 태어난 연도(birth) 탐색
+summary(welfare$birth)
+
+
+# 지역 코드(region_code) 탐색
+summary(welfare$region_code)
+table(welfare$region_code)
+
+# region_code 변수를 factor로 변환
+# labels
+#   1 : 서울
+#   2 : 수도권(인천/경기)
+#   3 : 부산/경남/울산
+#   4 : 대구/경북
+#   5 : 대전/충남
+#   6 : 강원/충북
+#   7 : 광주/전남/전북/제주도
+
+welfare$region_code <- factor(welfare$region_code,
+                              levels = 1:7,
+                              labels = c('서울',
+                                         '수도권(인천/경기)',
+                                         '부산/경남/울산',
+                                         '대구/경북',
+                                         '대전/충남',
+                                         '강원/충북',
+                                         '광주/전남/전북/제주도'))
+table(welfare$region_code)
+head(welfare)
+str(welfare)
+
+ggplot(data = welfare) +
+  geom_bar(mapping = aes(x = region_code))
+
+
+# 직종 코드(job_code) 탐색
+summary(welfare$job_code)
+table(welfare$job_code)
+
+# Koweps_Codebook.xlsx 파일의 두번째 시트('직종 코드')를 읽어서
+# 데이터 프레임을 생성
+library(readxl)
+job_df <- read_xlsx(path = 'datasets/Koweps_Codebook.xlsx',
+                    sheet = 2)
+head(job_df)
+tail(job_df)
+
+# welfare 데이터 프레임과 위에서 생성한 데이터 프레임을 left join.
+# (welfare 데이터 프레임의 row 개수 유지)
+welfare <- left_join(welfare, job_df,
+                     by = c('job_code' = 'code_job'))
+str(welfare)
+head(welfare)
+sum(is.na(welfare$job_code))
+sum(is.na(welfare$job))
