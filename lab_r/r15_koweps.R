@@ -45,8 +45,35 @@ tail(welfare)
 table(welfare$gender)   #> 분할표
 count(welfare, gender)  #> 데이터 프레임
 
-# factor 타입: 범주(카테고리)를 표현하는 변수
+# factor 타입: 범주(카테고리)를 표현하는 자료 타입
 welfare$gender <- factor(welfare$gender,  # factor 타입으로 변환할 객체
                          levels = c(1, 2),  # 변환할 객체가 가지고 있는 값들
                          labels = c('Male', 'Female'))  # 각각의 값에 붙여줄 레이블
 table(welfare$gender)
+str(welfare)
+
+# 성별 시각화
+ggplot(data = welfare) +
+  geom_bar(mapping = aes(x = gender, fill = gender))
+
+gender_count <- count(welfare, gender)
+gender_count
+ggplot(data = gender_count) +
+  geom_col(mapping = aes(x = gender, y = n))
+
+ggplot(data = gender_count) +
+  geom_col(mapping = aes(x = '', y = n, fill = gender)) +
+  coord_polar(theta = 'y')
+
+# 소득(income) 탐색
+summary(welfare$income)
+
+# 코드북 엑셀 파일을 보면, 소득의 정상 범위 1 ~ 9998
+# 1 미만 또는 9998 초과인 소득값들을 NA로 변경
+welfare$income <- ifelse(welfare$income < 1 | welfare$income > 9998, 
+                         NA, welfare$income)
+welfare$income <- ifelse(welfare$income >= 1 & welfare$income <= 9998,
+                         welfare$income, NA)
+
+summary(welfare$income)
+
