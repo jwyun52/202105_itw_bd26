@@ -136,7 +136,7 @@ table(welfare$job_code)
 
 # Koweps_Codebook.xlsx 파일의 두번째 시트('직종 코드')를 읽어서
 # 데이터 프레임을 생성
-library(readxl)
+library(readxl)  # 엑셀 파일 읽기를 위한 패키지
 job_df <- read_xlsx(path = 'datasets/Koweps_Codebook.xlsx',
                     sheet = 2)
 head(job_df)
@@ -148,5 +148,14 @@ welfare <- left_join(welfare, job_df,
                      by = c('job_code' = 'code_job'))
 str(welfare)
 head(welfare)
-sum(is.na(welfare$job_code))
-sum(is.na(welfare$job))
+
+is.na(welfare$job_code)
+
+sum(is.na(welfare$job_code))  # job_code의 NA 개수
+sum(is.na(welfare$job))  # job의 NA 개수
+
+
+# 현재까지 작업된 내용들(Global Environment에 생성된 객체들)을
+# 파일에 저장 --> 나중에 파일에 저장된 내용을 메모리로 로드할 수 있음.
+save(koweps, welfare, file = 'datasets/koweps.RData')
+
