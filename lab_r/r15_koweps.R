@@ -14,3 +14,39 @@ search()
 #   SPSS 프로그램에서 데이터를 저장한 파일
 # Koweps_Codebook.xlsx 파일: sav 파일의 변수들을 설명한 파일.
 # 성별, 연령, 직종, 월수입 등을 분석
+
+
+# 파일을 읽어서 데이터 프레임 생성
+koweps <- read_sav(file = 'datasets/Koweps_hpc10_2015_beta1.sav')
+str(koweps)
+
+# 변수(컬럼) 이름 변경 -> 관심있는 변수만 선택
+# dplyr::rename(df, new_variable_name = old_variable_name, ...)
+
+# h10_g3     --> gender(성별)
+# h10_g4     --> birth(태어난 연도)
+# h10_eco9   --> job_code(직종 코드)
+# h10_reg7   --> region_code(전국을 7개 권역으로 나눈 지역 코드)
+# p1002_8aq1 --> income(월 소득)
+
+welfare <- koweps %>% 
+  rename(gender = h10_g3,
+         birth = h10_g4,
+         job_code = h10_eco9,
+         region_code = h10_reg7,
+         income = p1002_8aq1) %>% 
+  select(gender, birth, job_code, region_code, income)
+
+# 데이터 일부 확인
+head(welfare)
+tail(welfare)
+
+# 성별(gender) 인구수
+table(welfare$gender)   #> 분할표
+count(welfare, gender)  #> 데이터 프레임
+
+# factor 타입: 범주(카테고리)를 표현하는 변수
+welfare$gender <- factor(welfare$gender,  # factor 타입으로 변환할 객체
+                         levels = c(1, 2),  # 변환할 객체가 가지고 있는 값들
+                         labels = c('Male', 'Female'))  # 각각의 값에 붙여줄 레이블
+table(welfare$gender)
