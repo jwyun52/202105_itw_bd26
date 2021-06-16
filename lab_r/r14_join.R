@@ -67,3 +67,19 @@ mpg %>%
   inner_join(fuel) %>% 
   mutate(price_per_mile = price / cty) %>% 
   select(model, cty, fl, price, price_per_mile)
+
+# 두개 이상의 데이터 프레임을 join:
+# df1 %>% inner_join(df2, by) %>% inner_join(df3, by) %>% ...
+
+
+# 데이터 프레임의 행(row) 합치기: bind_rows()
+students_1 <- data.frame(stu_id = 1:3,
+                         stu_name = c('a', 'b', 'c'))
+students_1
+
+students_2 <- data.frame(stu_id = 4:6,
+                         stu_name = c('d', 'e', 'f'))
+students_2
+
+bind_rows(students_1, students_2)
+students_1 %>% bind_rows(students_2)
