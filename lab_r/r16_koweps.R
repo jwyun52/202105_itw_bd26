@@ -77,15 +77,28 @@ ggplot(data = income_by_age) +
   geom_line(mapping = aes(x = age, y = mean_income))
 
 # 평균 월소득이 가장 높은 나이를 찾으세요.
+head(income_by_age)
+tail(income_by_age)
+
+filter(income_by_age, mean_income == max(mean_income))
 
 # 나이별 월소득 line graph에 평균 월소득 최댓값을 함께 표시하세요.
+ggplot(data = income_by_age) +
+  geom_line(mapping = aes(x = age, y = mean_income)) +
+  geom_vline(xintercept = 52, color = 'red', linetype = 'dashed') +
+  geom_hline(yintercept = 319, color = 'brown', linetype = 'dotted')
+# vline: vertical line(수직선)
+# xintercept: x절편. 직선이 x축과 만나는 좌표.
+# hline: horizontal line(수평선)
+# yintercept: y절편. 직선이 y축과 만나는 좌표.
 
 # age별 gender별 월소득 평균을 계산하고 line graph를 그리세요.
 # gender별로 선의 색깔이 다르게 표현하세요.
+income_by_age_gender <- welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age, gender) %>% 
+  summarise(mean_income = mean(income))
+income_by_age_gender
 
-
-
-
-
-
-
+ggplot(data = income_by_age_gender) +
+  geom_line(mapping = aes(x = age, y = mean_income, color = gender))
