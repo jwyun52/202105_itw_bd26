@@ -75,3 +75,17 @@ income_by_age <- welfare %>%
 # 나이별 월소득 평균 시각화
 ggplot(data = income_by_age) +
   geom_line(mapping = aes(x = age, y = mean_income))
+
+# 평균 월소득이 가장 높은 나이를 찾으세요.
+
+# 나이별 월소득 line graph에 평균 월소득 최댓값을 함께 표시하세요.
+
+# age별 gender별 월소득 평균을 계산하고 line graph를 그리세요.
+# gender별로 선의 색깔이 다르게 표현하세요.
+
+
+
+
+
+
+
