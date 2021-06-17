@@ -102,3 +102,19 @@ income_by_age_gender
 
 ggplot(data = income_by_age_gender) +
   geom_line(mapping = aes(x = age, y = mean_income, color = gender))
+
+
+# 연령대별 인구 수 -> 연령대별 평균 월소득 -> 연령대별 성별 평균 월소득
+# 연령대 파생변수 추가(age_range)
+# 20-(age10), 20~29(age20), 30~39(age30), 40~49(age40),
+# 50~59(age50), 60~69(age60), 70~79(age70), 80+(age80)
+welfare <- welfare %>% 
+  mutate(age_range = ifelse(age < 20, 'age10',
+                            ifelse(age < 30, 'age20',
+                                   ifelse(age < 40, 'age30',
+                                          ifelse(age < 50, 'age40',
+                                                 ifelse(age < 60, 'age50',
+                                                        ifelse(age < 70, 'age60',
+                                                               ifelse(age < 80, 'age70', 'age80'))))))))
+head(welfare)
+tail(welfare)
