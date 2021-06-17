@@ -118,3 +118,34 @@ welfare <- welfare %>%
                                                                ifelse(age < 80, 'age70', 'age80'))))))))
 head(welfare)
 tail(welfare)
+
+# 연령대별 인구수
+table(welfare$age_range)
+ggplot(data = welfare) +
+  geom_bar(mapping = aes(x = age_range))
+
+# 연령대별 평균 월소득
+income_by_agerange <- welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age_range) %>% 
+  summarise(mean_income = mean(income))
+
+income_by_agerange
+
+ggplot(data = income_by_agerange) +
+  geom_col(mapping = aes(x = age_range, y = mean_income))
+
+# 연령대별 성별 평균 월소득
+income_by_agerange_gender <- welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(age_range, gender) %>% 
+  summarise(mean_income = mean(income))
+
+income_by_agerange_gender
+
+ggplot(data = income_by_agerange_gender) +
+  geom_col(mapping = aes(x = age_range, y = mean_income, fill = gender),
+           position = 'dodge')
+
+# 작업 내용을 RData 파일로 저장
+save(koweps, welfare, file = 'datasets/koweps.RData')
