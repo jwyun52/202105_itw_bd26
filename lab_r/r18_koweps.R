@@ -124,6 +124,9 @@ welfare %>%
                          fill = gender),
            position = 'dodge')
 
+# 데이터 저장
+save(koweps, welfare, file = 'datasets/koweps.RData')
+
 
 # 지역별 직종별 평균 월소득
 # 서울 지역에서 평균 월소득 상위 5개 직종
