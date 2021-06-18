@@ -168,3 +168,51 @@ welfare %>%
   arrange(-mean_income) %>% 
   head(n = 10)
 
+
+# 10대, 20대 여성의 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(age_range %in% c('age10', 'age20') 
+         & gender == 'Female'
+         & !is.na(income)
+         & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(10)
+
+# 10대, 20대 남성의 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(age_range %in% c('age10', 'age20') 
+         & gender == 'Male'
+         & !is.na(income)
+         & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(10)
+
+# 30대, 40대, 50대 여성의 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(age_range %in% c('age30', 'age40', 'age50')
+# (age_range == 'age30' | age_range == 'age40' | age_range == 'age50')
+         & gender == 'Female'
+         & !is.na(income)
+         & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(10)
+
+# 30대, 40대, 50대 남성의 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(age_range %in% c('age30', 'age40', 'age50') 
+         & gender == 'Male'
+         & !is.na(income)
+         & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(10)
+
+# koweps, welfare 데이터 프레임을 RData 파일로 저장.
+save(koweps, welfare, file = 'datasets/koweps.RData')
