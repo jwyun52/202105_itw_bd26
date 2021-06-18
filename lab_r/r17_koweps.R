@@ -102,15 +102,69 @@ job_gender %>%
   head(n = 10)
 
 # 직종별 평균 월소득 상위 10개 직종 이름, 시각화
+income_by_job <- welfare %>% 
+  filter(!is.na(job) & !is.na(income)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income)
 
+income_by_job_top10 <- head(income_by_job, n = 10)
+income_by_job_top10
+
+ggplot(data = income_by_job_top10) +
+  geom_col(mapping = aes(x = mean_income, 
+                         y = reorder(job, mean_income)))
 
 # 직종별 평균 월소득 하위 10개 직종 이름, 시각화
+income_by_job_bottom10 <- tail(income_by_job, n = 10)
+income_by_job_bottom10
+
+ggplot(data = income_by_job_bottom10) +
+  geom_col(mapping = aes(x = mean_income,
+                         y = reorder(job, -mean_income)))
 
 # 직종별 종사자 수 20명 이상인 직종에서 평균 월소득 상/하위 10개 직종
+top10 <- income_by_job %>% 
+  filter(n >= 20) %>% 
+  head(n = 10)
+top10
+
+bottom10 <- income_by_job %>% 
+  filter(n >= 20) %>% 
+  tail(n = 10)
+bottom10
 
 # 남성 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(!is.na(income) & !is.na(job) & gender == 'Male') %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 10)
 
 # 여성 평균 월소득 상위 10개 직종
+welfare %>% 
+  filter(gender == 'Female' & !is.na(income) & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 10)
 
 # 남성 평균 월소득 상위 10개 직종. 직종별 남성 인구가 10명 이상인 경우.
+welfare %>% 
+  filter(!is.na(income) & !is.na(job) & gender == 'Male') %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  filter(n >= 10) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 10)
+
 # 여성 평균 월소득 상위 10개 직종. 직종별 여성 인구가 10명 이상인 경우.
+welfare %>% 
+  filter(gender == 'Female' & !is.na(income)  & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), n = n()) %>% 
+  filter(n >= 10) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 10)
+
