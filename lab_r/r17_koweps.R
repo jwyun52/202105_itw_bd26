@@ -85,8 +85,24 @@ job_gender %>%
 # 남성 종사자 비율이 높은 직종 상위 10개
 # job_gender 데이터 프레임에 파생변수 추가
 # female_ratio = female / (female + male)
+# male_ratio = male / (female + male)
+job_gender <- job_gender %>% 
+  mutate(female_ratio = Female / (Female + Male),
+         male_ratio = Male / (Female + Male))
+
+job_gender
+
+# 여성 비율 상위 10개 직종
+job_gender %>% 
+  arrange(-female_ratio) %>% 
+  head(n = 10)
+
+job_gender %>% 
+  arrange(-male_ratio) %>% 
+  head(n = 10)
 
 # 직종별 평균 월소득 상위 10개 직종 이름, 시각화
+
 
 # 직종별 평균 월소득 하위 10개 직종 이름, 시각화
 
@@ -97,6 +113,4 @@ job_gender %>%
 # 여성 평균 월소득 상위 10개 직종
 
 # 남성 평균 월소득 상위 10개 직종. 직종별 남성 인구가 10명 이상인 경우.
-
 # 여성 평균 월소득 상위 10개 직종. 직종별 여성 인구가 10명 이상인 경우.
-
