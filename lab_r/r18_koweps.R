@@ -82,4 +82,50 @@ welfare
 table(welfare$ages)
 
 # 지역별, ages별 인구수 테이블
+welfare %>% count(region_code, ages) %>% 
+  pivot_wider(names_from = ages, values_from = n)
+
 # 지역별, ages의 비율 막대 그래프
+ggplot(data = welfare) +
+  geom_bar(mapping = aes(y = region_code, fill = ages),
+           position = 'fill')
+
+
+# 지역별 평균 월소득, 시각화
+income_by_region <- welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(region_code) %>% 
+  summarise(mean_income = mean(income))
+
+income_by_region
+
+ggplot(data = income_by_region) +
+  geom_col(mapping = aes(x = mean_income,
+                         y = reorder(region_code, mean_income)))
+
+# 지역별 ages별 평균 월소득, 시각화
+welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(region_code, ages) %>% 
+  summarise(mean_income = mean(income)) %>% 
+  ggplot() +
+  geom_col(mapping = aes(x = region_code, y = mean_income, 
+                         fill = ages),
+           position = 'dodge')
+  
+
+# 지역별 성별 평균 월소득, 시각화
+welfare %>% 
+  filter(!is.na(income)) %>% 
+  group_by(region_code, gender) %>% 
+  summarise(mean_income = mean(income)) %>% 
+  ggplot() +
+  geom_col(mapping = aes(x = region_code, y = mean_income, 
+                         fill = gender),
+           position = 'dodge')
+
+
+# 지역별 직종별 평균 월소득
+# 서울 지역에서 평균 월소득 상위 5개 직종
+# 부산/경남/울산 지역에서 평균 월소득 상위 5개 직종
+# 강원/충북 지역에서 평균 월소득 상위 5개 직종
