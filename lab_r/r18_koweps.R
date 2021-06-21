@@ -20,9 +20,9 @@ ggplot(data = welfare) +
 table(welfare$gender)
 sum(table(welfare$gender))
 
-populations <- welfare %>% 
-  group_by(region_code, gender) %>% 
-  count()
+populations <- welfare %>% count(region_code, gender)
+  # group_by(region_code, gender) %>% 
+  # count()
 
 populations
 
@@ -130,5 +130,37 @@ save(koweps, welfare, file = 'datasets/koweps.RData')
 
 # 지역별 직종별 평균 월소득
 # 서울 지역에서 평균 월소득 상위 5개 직종
+welfare %>% 
+  filter(region_code == '서울' & !is.na(income) & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), count = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 5)
+
 # 부산/경남/울산 지역에서 평균 월소득 상위 5개 직종
+welfare %>% 
+  filter(region_code == '부산/경남/울산' & !is.na(income) & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), count = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 5)
+
 # 강원/충북 지역에서 평균 월소득 상위 5개 직종
+welfare %>% 
+  filter(region_code == '강원/충북' & !is.na(income) & !is.na(job)) %>% 
+  group_by(job) %>% 
+  summarise(mean_income = mean(income), count = n()) %>% 
+  arrange(-mean_income) %>% 
+  head(n = 5)
+
+
+df <- welfare %>% 
+  filter(!is.na(income) & !is.na(job)) %>% 
+  group_by(region_code, job) %>% 
+  summarise(mean_income = mean(income), count = n())
+
+df
+
+df %>% filter(region_code == '강원/충북') %>% 
+  arrange(-mean_income) %>% 
+  head(n = 5)
