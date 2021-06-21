@@ -44,3 +44,22 @@ ggplot(data = usa_state,
   geom_polygon(color = 'black', fill = 'white') +
   coord_quickmap()
 
+# map_data() 함수를 사용해서 세계지도를 그릴 수 있는 데이터 프레임 생성.
+# ggplot을 사용해서 지도를 그려보세요.
+world <- map_data(map = 'world')
+head(world)
+distinct(world, region)
+
+ggplot(data = world, 
+       mapping = aes(x = long, y = lat, group = group)) +
+  geom_polygon(color = 'black', fill = 'white') +
+  coord_map(projection = 'polyconic') # coord_quickmap()
+
+# map_data() 함수를 사용해서 세계지도에서 한국, 중국, 일본 region을 선택.
+# 선택한 region들을 지도로 표현
+asia <- map_data(map = 'world', 
+                 region = c('South Korea', 'North Korea', 'China', 'Japan'))
+ggplot(data = asia,
+       mapping = aes(x = long, y = lat, group = group)) +
+  geom_polygon(color = 'black', fill = 'white') +
+  coord_map(projection = 'polyconic')
