@@ -32,5 +32,39 @@ ggplotly(graph)
 plot_ly(data = mpg, x = ~displ, y = ~hwy, type = 'scatter',
         color = ~drv, symbol = ~class)
 
+# drv별 hwy의 boxplot
+g <- ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = drv, y = hwy))
+g
+ggplotly(g)
 
+plot_ly(data = mpg, type = 'box', x = ~drv, y = ~hwy)
+
+
+# ggplot2::economics 데이터 셋을 사용
+head(economics)
+
+# 인구수(pop) 시계열 그래프
+g <- ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = pop))
+g
+ggplotly(g)
+
+plot_ly(data = economics, type = 'scatter', mode = 'lines',
+        x = ~date, y = ~pop)
+
+# 개인저축률(psavert) 시계열 그래프
+g <- ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = psavert))
+g
+ggplotly(g)
+
+plot_ly(data = economics, mode = 'lines',
+        x = ~date, y = ~psavert)
+# 선그래프를 그릴 때 type = 'scatter' 생략 가능.
+
+# economics 데이터 프레임에 실업률(단위 %) 파생변수를 추가
+# 실업률 시계열 그래프
+
+# 개인저축률, 실업률을 하나의 그래프에
 
