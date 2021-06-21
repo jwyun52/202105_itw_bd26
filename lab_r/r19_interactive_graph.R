@@ -65,6 +65,32 @@ plot_ly(data = economics, mode = 'lines',
 
 # economics 데이터 프레임에 실업률(단위 %) 파생변수를 추가
 # 실업률 시계열 그래프
+economics <- economics %>% 
+  mutate(unemploy_pct = (unemploy / pop) * 100)
+
+head(economics)
+
+g <- ggplot(data = economics) +
+  geom_line(mapping = aes(x = date, y = unemploy_pct))
+g
+ggplotly(g)
+
+plot_ly(data = economics, type = 'scatter', mode = 'lines',
+        x = ~date, y = ~unemploy_pct)
 
 # 개인저축률, 실업률을 하나의 그래프에
+g <- ggplot(data = economics, mapping = aes(x = date)) +
+  geom_line(mapping = aes(y = psavert, color = 'psavert')) +
+  geom_line(mapping = aes(y = unemploy_pct, color = 'unemploy_pct')) +
+  ylab('Ratio')
+g
+ggplotly(g)
 
+plot_ly(data = economics, type = 'scatter', mode = 'lines',
+        x = ~date, y = ~psavert, name = '개인저축률') %>% 
+  add_trace(y = ~unemploy_pct, name = '실업률')
+
+# plot_ly() 함수
+#> type = 'scatter', mode = 'markers': 산점도 그래프
+#> type = 'scatter', mode = 'lines': 선 그래프
+#> type = 'scatter', mode = 'lines+markers': 선 그래프 + 마커(점)
