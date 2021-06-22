@@ -85,3 +85,47 @@ head(us_arrests)
 
 # head(distinct(usa_state, region))
 usa_state %>% distinct(region) %>% head()
+
+tail(us_arrests)
+usa_state %>% distinct(region) %>% tail()
+
+# us_arrests 데이터 프레임에서 주 이름들을 모두 소문자로 변환
+us_arrests$state <- tolower(us_arrests$state)
+head(us_arrests)
+tail(us_arrests)
+
+# 지도 데이터와 범죄 데이터를 join해서 새로운 데이터 프레임을 만듦.
+df <- left_join(usa_state, us_arrests, 
+                by = c('region' = 'state'))
+head(df)
+tail(df)
+
+# 미국 주 지도 위에 Murder 발생 건수를 색깔로 표현
+ggplot(data = df,
+       mapping = aes(x = long, y = lat, group = group)) +
+  geom_polygon(mapping = aes(fill = Murder), color = 'gray') +
+  coord_quickmap() +
+  scale_fill_continuous(low = 'white', high = 'red')
+
+
+# 단계 구분도(Choropleth plot):
+#   지도 위에 통계 값들을 색깔 단계로 구분해서 시각화한 그래프
+#   인구, 범죄, 질병 통계, ...
+# ggiraphExtra 패키지: 단계 구분도를 쉽게 그리기 위해 만들어지 패키지.
+# install.packages('ggiraphExtra')
+
+library(ggiraphExtra)
+search()
+
+ggChoropleth(data = us_arrests,
+             map = usa_state,
+             mapping = aes(map_id = state, fill = Murder),
+             interactive = TRUE)
+# ggChoropleth 함수의 파라미터:
+# data = 통계 값들을 가지고 있는 데이터 프레임
+#> 지도 데이터의 region 컬럼과 join할 수 있는 컬럼이 있어야 함.
+# map = 지도 정보(long, lat, group, order, region)가 있는 데이터 프레임
+# mapping = aes(...): 변수들의 값에 따라서 다르게 매핑(설정)하는 내용.
+#> map_id = map의 region가 join할 수 있는 data의 변수(컬럼) 이름.
+# interactive: 기본값은 FALSE. TRUE로 설정하면 interactive graph를 만듦.
+
