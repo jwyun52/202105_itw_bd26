@@ -63,3 +63,25 @@ ggplot(data = asia,
        mapping = aes(x = long, y = lat, group = group)) +
   geom_polygon(color = 'black', fill = 'white') +
   coord_map(projection = 'polyconic')
+
+
+# 미국 주(state) 지도 위에 통계 데이터 표현
+# 미국 state의 지도 정보
+head(usa_state)
+
+# usa_state 변수의 구분되는 값들
+distinct(usa_state, region)  # 49개 주 이름 - 소문자
+
+# datasets::USArrests 예제 데이터 셋 - 범죄 통계 데이터
+head(USArrests)
+str(USArrests)
+#> 50 observations, 4 variables
+#> 미국 주 이름들이 컬럼(변수)이 아니라 행 이름으로 설정되어 있음!
+#> 지도 데이터와 범죄 통계 데이터를 merge(join)하기 위해서는
+# 행 이름들을 컬럼(변수)으로 변환해야 할 필요가 있음.
+us_arrests <- rownames_to_column(USArrests, var = 'state')
+str(us_arrests)
+head(us_arrests)
+
+# head(distinct(usa_state, region))
+usa_state %>% distinct(region) %>% head()
