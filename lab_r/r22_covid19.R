@@ -43,7 +43,42 @@ us_covid_recent %>% distinct(state, fips) %>% head()
 us_map_covid <- left_join(us_map, us_covid_recent, 
                           by = c('region' = 'state'))
 head(us_map_covid)
+tail(us_map_covid)
 
+ggplot(data = us_map_covid,
+       mapping = aes(x = long, y = lat, group = group)) +
+  geom_polygon(mapping = aes(fill = cases), color = 'darkgray') +
+  coord_quickmap() +
+  scale_fill_continuous(low = 'lightyellow', high = 'red')
+
+ggChoropleth(data = us_covid_recent,
+             map = us_map,
+             mapping = aes(map_id = state, fill = cases),
+             interactive = TRUE)
+
+# 날짜별 확진자 수 시계열 그래프
+head(us_covid)
+tail(us_covid)
+# 날짜별 누적 확진자 수
+us_covid_ts <- us_covid %>% 
+  group_by(date) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths))
+head(us_covid_ts)
+tail(us_covid_ts)
+
+# 문자열인 date 변수를 날짜 타입으로 변환해서 그래프를 그림.
+g <- ggplot(data = us_covid_ts,
+       mapping = aes(x = as.Date(date), y = cases)) +
+  geom_line()
+g
+
+ggplot(data = us_covid_ts, mapping = aes(x = as.Date(date))) +
+  geom_line(mapping = aes(y = cases)) +
+  geom_line(mapping = aes(y = deaths))
+
+ggplotly(g)
+plot_ly(data = us_covid_ts, type = 'scatter', mode = 'lines',
+        x = ~as.Date(date), y = ~cases)
 
 # 서울시 코로나 확진자 수 시각화
 
