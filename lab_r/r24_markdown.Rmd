@@ -1,6 +1,11 @@
 ---
 title: "R Markdown 기초"
-output: html_document
+output: 
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+mainfont: MalgunGothic
 ---
 
 # 제목 1
@@ -74,3 +79,5 @@ mpg  # mpg 데이터 프레임 출력
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
+
+
