@@ -120,3 +120,39 @@ test_predictions2 <- knn(train = train_features,
                          test = test_features,
                          k = 11)
 mean(test_predictions2 == test_target)
+
+# Confusion Matrix(오차 행렬, 혼동 행렬, 혼돈 행렬)
+CrossTable(x = test_target,       # 실젯값
+           y = test_predictions,  # 예측값
+           prop.chisq = FALSE)
+
+CrossTable(x = test_target,
+           y = test_predictions2,
+           prop.chisq = FALSE)
+
+# 특성 스케일링: 정규화(normalization), 표준화(standardization)
+# 변수(특성)들마다 다른 단위와 크기를 비슷한 스케일로 변환하는 것.
+# 거리를 계산할 때 모든 특성들이 비슷한 영향을 미칠 수 있도록 하기 위해서.
+# 정규화(normalization):
+#   변수의 최솟값을 0, 최댓값을 1로 변환.
+#   모든 값들이 0 ~ 1 범위의 값이 되도록 변환.
+# 표준화(standardization): z-score 표준화
+#   변수의 평균이 0, 표준편차가 1이 되도록 변환.
+
+v1 <- 1:5
+v1
+
+v1_min <- min(v1)
+v1_min
+
+v1_max <- max(v1)
+v1_max
+
+v1_normalized <- (v1 - v1_min) / (v1_max - v1_min)
+v1_normalized
+
+v2 <- seq(10, 50, 10)
+v2
+
+v2_normalized <- (v2 - min(v2)) / (max(v2) - min(v2))
+v2_normalized
