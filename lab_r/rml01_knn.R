@@ -210,3 +210,39 @@ head(target)
 features_standardized <- data.frame(lapply(features, standardize))
 head(features_standardized)
 summary(features_standardized)
+
+
+# R의 데이터 타입
+# vector: 한가지 타입의 데이터 여러개를 1차원으로 저장하는 자료 구조.
+num_vector <- c(1, 2, 10, 20)  # 숫자 벡터
+char_vector <- c('a', 'b', '가', '나')  # 문자열 벡터
+
+# matrix: 한가지 타입의 데이터 여러개를 2차원으로 저장하는 자료 구조.
+num_mat <- matrix(data = 1:12, nrow = 3, ncol = 4)
+num_mat
+
+# array: 한가지 타입의 데이터 여러개를 3차원 이상으로 저장하는 자료 구조.
+# data frame: 각각의 열(column)마다 다른 타입의 데이터를 저장할 수 있는
+# 2차원 모양의 자료 구조.
+df <- data.frame(v1 = c(1, 2, 3),
+                 v2 = c('a', 'b', 'c'))
+df
+df$v1
+
+# list: key-value 쌍으로 데이터 저장
+my_list <- list(v1 = 100, 
+                v2 = c(1, 3, 5),
+                v3 = df)
+my_list
+
+
+df <- data.frame(v1 = 1:5, v2 = seq(10, 50, 10))
+df
+# lapply, rapply 비교
+result <- lapply(df, standardize)
+result  # 리스트
+result$v1
+result$v2
+
+result2 <- rapply(df, standardize)
+result2
