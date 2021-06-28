@@ -107,6 +107,16 @@ test_predictions <- knn(train = train_features,
                         k = 3)
 test_predictions  # 테스트 셋의 예측값
 
-# 테스트 셋의 예측값과 실제값을 비교
+# 테스트 셋의 예측값과 실젯값을 비교
 test_predictions == test_target
-mean(test_predictions == test_target)
+sum(test_predictions == test_target)  
+#> TRUE(예측값과 실젯값이 일치한 것들)의 개수
+mean(test_predictions == test_target)  
+#> 정확도 = 예측이 맞은 개수 / 전체 개수
+
+# k = 11인 경우 정확도
+test_predictions2 <- knn(train = train_features,
+                         cl = train_target,
+                         test = test_features,
+                         k = 11)
+mean(test_predictions2 == test_target)
