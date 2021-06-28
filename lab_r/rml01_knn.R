@@ -142,6 +142,7 @@ CrossTable(x = test_target,
 v1 <- 1:5
 v1
 
+# 정규화
 v1_min <- min(v1)
 v1_min
 
@@ -156,3 +157,56 @@ v2
 
 v2_normalized <- (v2 - min(v2)) / (max(v2) - min(v2))
 v2_normalized
+
+# 표준화
+v1
+
+v1_mean <- mean(v1)
+v1_mean
+
+v1_std <- sd(v1)
+v1_std
+
+v1_standardized <- (v1 - v1_mean) / v1_std
+v1_standardized
+mean(v1_standardized)
+sd(v1_standardized)
+
+v2
+v2_standardized <- (v2 - mean(v2)) / sd(v2)
+v2_standardized
+mean(v2_standardized)
+sd(v2_standardized)
+
+# iris 데이터 셋을 표준화
+# iris의 특성 4개에 모두 같은 함수를 적용
+
+# R에서 함수 작성 방법
+# 함수이름 <- function(파라미터) {함수의 기능을 작성}
+standardize <- function(x) {
+  return((x - mean(x)) / sd(x))
+}
+
+standardize(v1)
+standardize(v2)
+
+df <- data.frame(v1 = seq(1, 5, 1),
+                 v2 = seq(10, 50, 10))
+df
+
+# lapply(데이터프레임, 함수): 
+#   데이터 프레임의 모든 컬럼(변수)에 함수를 적용한 결과를 리턴.
+lapply(df, standardize)
+df_standardized <- data.frame(lapply(df, standardize))
+df_standardized
+
+# iris 데이터 셋을 특성과 타겟으로 분리
+features <- iris[, 1:4]
+target <- iris[, 5]
+
+head(features)
+head(target)
+
+features_standardized <- data.frame(lapply(features, standardize))
+head(features_standardized)
+summary(features_standardized)
