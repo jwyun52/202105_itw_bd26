@@ -87,3 +87,36 @@ mean(test_predictions == test_target)  # 93.8%
 CrossTable(x = test_target,
            y = test_predictions,
            prop.chisq = FALSE)
+
+# 모든 특성들을 표준화(standardization) 후 knn 알고리즘을 적용
+standardize <- function(x) {
+  # x: 숫자 벡터
+  mean <- mean(x)  # 숫자 벡터의 평균을 계산
+  std <- sd(x)  # 숫자 벡터의 표준편차를 계산
+  return ((x - mean) / std)  # 표준화한 결과를 반환
+}
+
+features_standardized <- data.frame(lapply(features, standardize))
+summary(features_standardized)
+
+# 표준화된 특성들을 사용해서 k=3, k=11 결과 비교
+# 표준화된 훈련 셋
+train_set_std <- features_standardized[1:tr_size, ]  
+# 표준화된 테스트 셋
+test_set_std <- features_standardized[(tr_size + 1):569, ]  
+
+test_predictions <- knn(train = train_set_std,
+                        cl = train_target,
+                        test = test_set_std,
+                        k = 3)
+mean(test_predictions == test_target)  # 96.5%
+CrossTable(x = test_target, y = test_predictions, 
+           prop.chisq = FALSE)
+
+test_predictions <- knn(train = train_set_std,
+                        cl = train_target,
+                        test = test_set_std,
+                        k = 11)
+mean(test_predictions == test_target)  # 95.6%
+CrossTable(x = test_target, y = test_predictions, 
+           prop.chisq = FALSE)
