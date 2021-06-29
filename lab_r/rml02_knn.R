@@ -36,3 +36,54 @@ head(wisc_bc_data)
 features <- wisc_bc_data[, 3:32]  # 모든 행들,  3~32번째 열들
 target <- wisc_bc_data[, 2]  # 모든 행들, 2번째 열
 
+# 데이터 셋의 80%를 훈련 셋, 20%를 테스트 셋으로 사용
+# target이 정렬된 상태가 아니기 때문에, 
+# random sampling(임의 추출)을 사용하지 않고,
+# 순서대로 분리해도 괜찮음.
+tr_size <- round(569 * 0.8)  # 훈련 셋의 관찰값 개수
+
+# 훈련/테스트 특성들
+train_set <- features[1:tr_size, ]  # 1 ~ 455 행
+test_set <- features[(tr_size + 1):569, ]  # 456 ~ 569 행
+
+# 훈련/테스트 레이블(타겟)
+train_target <- target[1:tr_size]
+test_target <- target[(tr_size + 1):569]
+
+# 훈련/테스트 레이블이 편향되지 않고 임의로 섞여 있는 지 확인
+table(train_target)
+prop.table(table(train_target))
+
+table(test_target)
+prop.table(table(test_target))
+
+# knn 알고리즘 적용
+test_predictions <- knn(train = train_set,
+                        cl = train_target,
+                        test = test_set,
+                        k = 1)
+
+# knn 알고리즘 평가
+mean(test_predictions == test_target)  # 94.7%
+CrossTable(x = test_target,
+           y = test_predictions,
+           prop.chisq = FALSE)
+
+# 다른 k값의 결과와 비교
+test_predictions <- knn(train = train_set,
+                        cl = train_target,
+                        test = test_set,
+                        k = 3)
+mean(test_predictions == test_target)  # 95.6%
+CrossTable(x = test_target,
+           y = test_predictions,
+           prop.chisq = FALSE)
+
+test_predictions <- knn(train = train_set,
+                        cl = train_target,
+                        test = test_set,
+                        k = 11)
+mean(test_predictions == test_target)  # 93.8%
+CrossTable(x = test_target,
+           y = test_predictions,
+           prop.chisq = FALSE)
