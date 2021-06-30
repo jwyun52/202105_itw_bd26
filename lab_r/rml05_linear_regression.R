@@ -45,3 +45,29 @@ summary(lin_reg)
 #  -> 우리가 찾은 선형 모델이 통계적으로 유의하다.
 #> R^2 점수, 조정된 R^2 점수: 선형 모델이 전체 데이터를 설명하는 정도.
 #  -> R^2 점수는 1에 가까울 수록 좋은 모델.
+#> Residual(잔차) = 실제값 - 예측값
+
+# 회귀 모델의 평가(성능 지표):
+# MSE(Mean Squared Error): 오차들의 제곱의 평균
+# RMSE(Root Mean Squared Error): 오차들의 제곱의 평균의 제곱근
+# MAE(Mean Absolute Error): 오차들의 절대값의 평균
+# MSE(또는 RMSE), MAE가 작은 모델이 좋은 성능의 모델.
+
+lin_reg$coefficients  #> 선형 회귀 모델(y = a + bx)의 계수들
+head(lin_reg$residuals)  #> 선형 회귀 모델의 잔차들(벡터)
+
+a <- lin_reg$coefficients[1]  # y절편
+b <- lin_reg$coefficients[2]  # x의 기울기
+y_hat <- a + b * heights_df$father  # y_hat = a + bx: 예측값
+y <- heights_df$son  # 실제값
+e <- y - y_hat  # 오차(error), 잔차(residual)
+head(e)
+
+# SSE(Sum of Squared Error): 오차들의 제곱의 합
+sse <- sum(e ** 2)
+
+# 전체 샘플 개수
+N <- nrow(heights_df)
+mse <- sse / N  # mean squared error: 38.26
+rmse <- sqrt(mse)  # root mean squared error: 6.19
+mae <- sum(abs(e)) / N  # mean absolute error: 4.80
