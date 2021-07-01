@@ -63,7 +63,7 @@ test_set <- insurance_df[(tr_size + 1):n, ]  # 테스트 셋
 # 모델 훈련
 # expenses ~ age + sex + bmi + children + smoker + region
 lin_reg1 <- lm(formula = expenses ~ ., data = train_set)
-summary(lin_reg1)
+summary(lin_reg1)  # adjusted R^2 = 0.7467
 
 # 선형 모델에서 훈련 셋의 예측값
 train_predictions <- predict(lin_reg1, train_set)
@@ -81,3 +81,45 @@ head(test_set$expenses)  # 실제값
 
 # 테스트 셋 평가 점수
 rmse(test_set$expenses, test_predictions)  #> 6096.883
+# 일반적으로 훈련 셋의 평가 점수가 테스트 셋의 평가 점수보다 좋은 경우가 많음.
+# 과대적합(over-fitting, over-fitted):
+# 훈련 셋의 평가 점수가 테스트 셋의 평가 점수보다 크게 차이가 나도록 좋은 경우.
+
+# 선형 모델을 변경 후 평가
+# expenses ~ age + sex + bmi + smoker
+lin_reg2 <- lm(formula = expenses ~ age + sex + bmi + smoker,
+               data = train_set)
+summary(lin_reg2)  #> adjusted R^2 = 0.7441
+
+# 훈련 셋 평가
+train_predictions2 <- predict(lin_reg2, train_set)
+rmse(train_set$expenses, train_predictions2)  #> 6073.699
+
+# 테스트 셋 평가
+test_predictions2 <- predict(lin_reg2, test_set)
+rmse(test_set$expenses, test_predictions2)  #> 6126.623
+
+
+# 비선형 항을 추가한 모델
+# expenses ~ age + age^2 + sex + bmi + smoker
+insurance_df$age_square <- insurance_df$age ** 2  # 파생 변수 추가
+head(insurance_df)
+train_set <- insurance_df[1:tr_size, ]
+test_set <- insurance_df[(tr_size + 1):n, ]
+
+lin_reg3 <- lm(formula = expenses ~ age + age_square + sex + bmi + smoker,
+               data = train_set)
+summary(lin_reg3)  #> Adjusted R-squared:  0.7451
+
+train_predictions3 <- predict(lin_reg3, train_set)
+rmse(train_set$expenses, train_predictions3)  #> 6058.983
+
+test_predictions3 <- predict(lin_reg3, test_set)
+rmse(test_set$expenses, test_predictions3)  #> 6104.617
+
+
+# bmi 변수의 값에 따른 파생 변수 추가
+# overweight = 1 if bmi >= 30, overweight = 0 if bmi < 30
+# model4: expenses ~ .
+# model5: expenses ~ age + age_square + bmi + smoker
+#                    + overweight + overweight * smoker
