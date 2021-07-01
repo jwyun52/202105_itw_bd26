@@ -61,3 +61,23 @@ train_set <- insurance_df[1:tr_size, ]  # 훈련 셋
 test_set <- insurance_df[(tr_size + 1):n, ]  # 테스트 셋
 
 # 모델 훈련
+# expenses ~ age + sex + bmi + children + smoker + region
+lin_reg1 <- lm(formula = expenses ~ ., data = train_set)
+summary(lin_reg1)
+
+# 선형 모델에서 훈련 셋의 예측값
+train_predictions <- predict(lin_reg1, train_set)
+head(train_predictions)  # 예측값 일부
+head(train_set$expenses)  # 실제값 일부
+head(lin_reg1$residuals)  # 잔차 (= 실제값 - 예측값) 일부
+
+# 훈련 셋 평가 점수
+rmse(train_set$expenses, train_predictions)  #> 6030.798
+
+# 테스트 셋 예측값
+test_predictions <- predict(lin_reg1, test_set)
+head(test_predictions)  # 예측값
+head(test_set$expenses)  # 실제값
+
+# 테스트 셋 평가 점수
+rmse(test_set$expenses, test_predictions)  #> 6096.883
