@@ -57,3 +57,37 @@ CrossTable(train_set$Species, train_predictions,
 test_predictions <- predict(svm_clf, test_set)
 mean(test_set$Species == test_predictions)  #> 96.7%
 CrossTable(test_set$Species, test_predictions)
+
+# 여러가지 커널 함수 비교
+# 1) Gaussian RBF kernel
+svm_rbf <- ksvm(x = Species ~ ., data = train_set,
+                kernel = 'rbfdot')
+# 훈련 셋 정확도
+train_predictions2 <- predict(svm_rbf, train_set)
+mean(train_set$Species == train_predictions2)  #> 0.983
+# 테스트 셋 정확도, confusion matrix
+test_predictions2 <- predict(svm_rbf, test_set)
+mean(test_set$Species == test_predictions2)  # 0.933
+CrossTable(test_set$Species, test_predictions2, prop.chisq = FALSE)
+
+# 2) Polynomial kernel
+svm_poly <- ksvm(x = Species ~ ., data = train_set,
+                 kernel = 'polydot')
+svm_poly
+# 훈련 셋 평가
+train_predictions3 <- predict(svm_poly, train_set)
+mean(train_set$Species == train_predictions3)  #> 0.983
+# 테스트 셋 평가
+test_predictions3 <- predict(svm_poly, test_set)
+mean(test_set$Species == test_predictions3)  #> 0.966
+CrossTable(test_set$Species, test_predictions3, prop.chisq = FALSE)
+
+
+
+# -----
+# wisc_bc_data.csv 암 데이터 예측 - ksvm() 사용
+# diagnosis 변수를 factor 타입으로 변환
+
+
+
+
