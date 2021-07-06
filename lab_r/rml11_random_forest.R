@@ -49,3 +49,39 @@ mean(train_set$Species == train_predictions)  #> 1
 test_predictions <- predict(forest_clf, test_set)
 mean(test_set$Species == test_predictions)  #> 0.933
 CrossTable(test_set$Species, test_predictions, prop.chisq = FALSE)
+
+
+# -----
+# Random Forest를 사용한 wisc_bc_data.csv 데이터 암 예측
+
+# 데이터 준비
+url <- 'https://github.com/JakeOh/202105_itw_bd26/raw/main/datasets/wisc_bc_data.csv'
+wisc_bc_data <- read.csv(url)
+str(wisc_bc_data)
+
+# diagnosis 변수를 factor 타입으로 변환
+wisc_bc_data$diagnosis <- factor(wisc_bc_data$diagnosis,
+                                 levels = c('B', 'M'),
+                                 labels = c('Benign', 'Malignant'))
+table(wisc_bc_data$diagnosis)
+
+# train/test 분리
+n <- nrow(wisc_bc_data)
+tr_size <- round(n * 0.8)
+train_set <- wisc_bc_data[1:tr_size, 2:32]
+test_set <- wisc_bc_data[(tr_size + 1):n, 2:32]
+#> id 변수는 제외함.
+
+# Random Forest 모델 훈련
+forest_clf <- randomForest(formula = diagnosis ~ .,
+                           data = train_set)
+forest_clf  #> OOB estimate of  error rate: 5.27%
+
+# 훈련 셋 평가
+train_predictions <- predict(forest_clf, train_set)
+mean(train_set$diagnosis == train_predictions)  #> 1
+
+# 테스트 셋 평가
+test_predictions <- predict(forest_clf, test_set)
+mean(test_set$diagnosis == test_predictions)  #> 0.982
+CrossTable(test_set$diagnosis, test_predictions, prop.chisq = FALSE)
